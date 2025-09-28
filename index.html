@@ -1,0 +1,898 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO: Title and Meta Description -->
+    <title>Raghav & Associates | Business Registration & Compliance in Prayagraj</title>
+    <meta name="description" content="Expert services for Company Registration, GST, ITR Filing, and business compliance in Prayagraj. Raghav & Associates simplifies legal processes for startups and growing businesses.">
+
+
+    <link rel="icon" type="image/x-icon" href="assets/raghav-associates-logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   
+    <!-- Google Fonts: Poppins & Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+   
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #1A3A3A;
+            --secondary: #00796B;
+            --accent: #C5A565;
+            --light: #f7f9f9;
+            --dark: #333333;
+            --gray: #6c757d;
+            --light-blue: #E0F2F1;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+       
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { line-height: 1.6; color: var(--dark); background-color: var(--light); overflow-x: hidden; font-family: 'Open Sans', sans-serif; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+        section { padding: 80px 0; }
+        h1, h2, h3, h4 { margin-bottom: 1rem; color: var(--primary); font-family: 'Poppins', sans-serif; font-weight: 700; }
+        h1 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.2; }
+       
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        h2:after {
+            content: ''; display: block; width: 80px; height: 4px; background: var(--accent);
+            margin: 12px auto 0; border-radius: 2px; transition: var(--transition);
+        }
+        h2:hover:after { width: 120px; }
+       
+        p { margin-bottom: 1rem; font-family: 'Open Sans', sans-serif; font-size: clamp(0.9rem, 2.5vw, 1rem); }
+        .section-intro { text-align: center; max-width: 800px; margin: 1rem auto 3rem; font-family: 'Open Sans', sans-serif; }
+       
+        .btn {
+            display: inline-block; padding: 12px 30px; background: var(--secondary); color: white; border: none;
+            border-radius: 50px; cursor: pointer; text-decoration: none; font-weight: 600;
+            transition: var(--transition); box-shadow: 0 5px 15px rgba(0, 121, 107, 0.3);
+            position: relative; overflow: hidden; z-index: 1; font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+        .btn:before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s; z-index: -1;
+        }
+        .btn:hover { background: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(26, 58, 58, 0.4); }
+        .btn:hover:before { left: 100%; }
+        .btn-accent { background-color: var(--accent); box-shadow: 0 5px 15px rgba(197, 165, 101, 0.3); }
+        .btn-accent:hover { background-color: #b38e4c; box-shadow: 0 10px 25px rgba(197, 165, 101, 0.4); }
+       
+        /* Header & Navigation */
+        header { background: white; box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1); position: fixed; width: 100%; top: 0; z-index: 1000; transition: var(--transition); }
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        .logo-img { width: 70px; height: 70px; }
+        .logo-text { font-size: clamp(1.2rem, 3vw, 1.8rem); font-weight: 700; color: var(--primary); text-decoration: none; font-family: 'Poppins', sans-serif; }
+        .desktop-nav { display: none; } /* Mobile first: hide desktop nav */
+        .desktop-nav ul { display: flex; list-style: none; gap: 25px; align-items: center;}
+        .desktop-nav ul li a { text-decoration: none; color: var(--dark); font-weight: 600; transition: var(--transition); position: relative; padding: 8px 0; font-size: clamp(0.9rem, 2vw, 1rem); white-space: nowrap; }
+        .desktop-nav ul li a:hover { color: var(--secondary); }
+        .desktop-nav ul li a:after { content: ''; position: absolute; width: 0; height: 3px; bottom: 0; left: 0; background-color: var(--secondary); transition: var(--transition); border-radius: 3px; }
+        .desktop-nav ul li a:hover:after { width: 100%; }
+       
+        .menu-toggle { display: flex; flex-direction: column; justify-content: space-between; width: 30px; height: 21px; cursor: pointer; z-index: 1001; }
+        .menu-toggle span { display: block; height: 3px; width: 100%; background-color: var(--primary); border-radius: 3px; transition: var(--transition); }
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
+
+
+        /* Show desktop nav only on large screens */
+        @media (min-width: 1024px) {
+            .desktop-nav { display: flex; }
+            .menu-toggle { display: none; }
+        }
+
+
+        .mobile-nav { position: fixed; top: 0; right: -100%; width: 280px; height: 100%; background: white; box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); z-index: 1000; transition: right 0.4s ease; padding: 80px 30px 30px; overflow-y: auto; }
+        .mobile-nav.active { right: 0; }
+        .mobile-nav ul { list-style: none; }
+        .mobile-nav ul li { margin-bottom: 20px; }
+        .mobile-nav ul li a { display: block; padding: 12px 15px; color: var(--dark); text-decoration: none; font-weight: 600; border-radius: 8px; transition: var(--transition); font-size: 1.1rem; }
+        .mobile-nav ul li a:hover { background: var(--light-blue); color: var(--secondary); transform: translateX(5px); }
+        .mobile-menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+       
+        /* Hero Section */
+        .hero { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 180px 0 100px; text-align: center; position: relative; overflow: hidden; }
+        .hero:before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,192C672,181,768,139,864,138.7C960,139,1056,181,1152,181.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>'); background-size: cover; background-position: center; animation: wave 20s linear infinite; }
+        @keyframes wave { 0% { transform: translateX(0); } 50% { transform: translateX(-5%); } 100% { transform: translateX(0); } }
+        .hero-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; animation: fadeInUp 1s ease-out; }
+        .hero h1 { color: white; margin-bottom: 1.5rem; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); }
+        .hero p { font-size: clamp(1rem, 3vw, 1.3rem); margin-bottom: 2.5rem; opacity: 0.9; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .hero-btns { display: flex; justify-content: center; gap: 20px; margin-top: 30px; flex-wrap: wrap; }
+        .btn-secondary { background: transparent; border: 2px solid white; }
+        .btn-secondary:hover { background: white; color: var(--primary); }
+
+
+        /* Gemini AI Feature Styles */
+        #gemini-analyzer { background-color: white; }
+        .analyzer-box { max-width: 800px; margin: 0 auto; padding: 2.5rem; background-color: #ffffff; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
+        #idea-input { width: 100%; padding: 1rem; border: 1px solid #cbd5e1; border-radius: 10px; min-height: 100px; font-family: 'Open Sans', sans-serif; font-size: 1rem; resize: vertical; transition: border-color 0.3s, box-shadow 0.3s; }
+        #idea-input:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.2); }
+        #analyze-btn { margin-top: 1.5rem; width: 100%; }
+        #gemini-result { margin-top: 2rem; padding: 1.5rem; background-color: var(--light); border: 1px solid var(--light-blue); border-radius: 10px; display: none; }
+        #gemini-result h3 { margin-top: 1rem; color: var(--primary); }
+        #gemini-result ul { list-style-position: inside; padding-left: 0.5rem; }
+        #gemini-result li { margin-bottom: 0.5rem; }
+        .loader { width: 48px; height: 48px; border: 5px solid var(--secondary); border-bottom-color: transparent; border-radius: 50%; display: none; margin: 2rem auto 0; box-sizing: border-box; animation: rotation 1s linear infinite; }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+       
+        /* Service Cards */
+        .new-service-card { background-color: white; padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); border: 1px solid #f3f4f6; transition: all 0.3s ease-in-out; display: flex; flex-direction: column; height: 100%; }
+        .new-service-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
+        .new-service-card-content { flex-grow: 1; }
+        .new-service-card h3 { font-family: 'Poppins', sans-serif; font-size: 1.125rem; font-weight: 600; color: #1f2937; margin-bottom: 0.5rem; }
+        .new-service-card p { font-family: 'Open Sans', sans-serif; font-size: 0.875rem; color: #6b7280; }
+       
+        /* Process Section */
+        .process-section { background: white; }
+        .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 2rem; }
+        .process-step { text-align: center; padding: 30px 20px; background: var(--light); border-radius: 15px; transition: var(--transition); position: relative; }
+        .process-step:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .step-number { width: 50px; height: 50px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 20px; }
+        .step-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
+
+
+        /* Testimonials Section */
+        .testimonials { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%); }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 2rem; }
+        .testimonial-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; }
+        .testimonial-card:before { content: '"'; font-size: 4rem; color: var(--light-blue); position: absolute; top: 10px; right: 20px; line-height: 1; }
+        .testimonial-content { margin-bottom: 20px; font-style: italic; }
+        .testimonial-author { display: flex; align-items: center; gap: 15px; }
+        .author-avatar { width: 50px; height: 50px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; }
+        .author-info h4 { margin: 0; font-size: 1.1rem; }
+        .author-info p { margin: 0; color: var(--gray); font-size: 0.9rem; }
+
+
+        /* Stats Section */
+        .stats { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; text-align: center; padding: 70px 0; }
+        .stats h2 { color: white; margin-bottom: 3rem; }
+        .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .stat-item { padding: 25px 15px; background: rgba(255, 255, 255, 0.1); border-radius: 15px; backdrop-filter: blur(10px); transition: var(--transition); }
+        .stat-item:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.15); }
+        .stat-icon { font-size: 2.5rem; margin-bottom: 20px; color: var(--accent); }
+        .stat-text { font-size: 1.3rem; font-weight: 600; margin-bottom: 15px; display: block; }
+        .stat-item p { opacity: 0.9; font-size: 0.95rem; line-height: 1.5; }
+       
+        /* About Section */
+        .about { background: white; position: relative; }
+        .about-content { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
+        .about-text { flex: 1; min-width: 300px; }
+        .about-text p { margin-bottom: 1.5rem; }
+        .about-buttons { margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap; }
+        .about-image { flex: 1; text-align: center; position: relative; min-width: 300px; }
+        .image-placeholder { background: #e9ecef; height: 350px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--gray); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); transition: var(--transition); overflow: hidden; }
+        .image-placeholder:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); }
+        .image-placeholder i { font-size: 5rem; margin-bottom: 25px; color: var(--primary); }
+        .image-placeholder p { font-weight: 600; font-size: 1.3rem; }
+       
+        /* FAQ Section */
+        .faq-section { background: white; padding: 80px 0; }
+        .faq-container { max-width: 900px; margin: 0 auto; }
+        .faq-item { margin-bottom: 15px; border-radius: 10px; overflow: hidden; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05); border: 1px solid #eaeaea; }
+        .faq-question { padding: 15px 20px; background: var(--light-blue); display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: var(--transition); }
+        .faq-question:hover { background: var(--secondary); }
+        .faq-question:hover h3, .faq-question:hover .faq-icon { color: white; }
+        .faq-question h3 { margin: 0; font-size: clamp(0.9rem, 2.5vw, 1rem); color: var(--primary); transition: var(--transition); }
+        .faq-icon { font-size: 1.1rem; color: var(--accent); transition: var(--transition); }
+        .faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: white; }
+        .faq-answer p, .faq-answer ul { padding: 10px 0; }
+        .faq-item.active .faq-answer { max-height: 500px; padding: 10px 20px 20px; }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+       
+        /* Contact Section & Form */
+        .contact { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%); }
+        .contact-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px; }
+        .contact-info { display: flex; flex-direction: column; gap: 20px; }
+        .contact-item { display: flex; align-items: center; gap: 20px; padding: 15px; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); transition: var(--transition); cursor: pointer; }
+        .contact-item:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
+        .contact-icon { background: var(--secondary); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; transition: var(--transition); }
+        .contact-item:hover .contact-icon { background: var(--primary); transform: scale(1.1); }
+        .contact-details { color: var(--dark); }
+        .contact-form { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); }
+        .form-group { margin-bottom: 20px; position: relative; }
+        .form-group label { display: block; margin-bottom: 10px; font-weight: 600; color: var(--primary); font-size: clamp(0.9rem, 2.5vw, 1rem); }
+        .form-control { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 10px; font-size: clamp(0.9rem, 2.5vw, 1rem); transition: var(--transition); font-family: 'Open Sans', sans-serif; }
+        .form-control:focus { border-color: var(--secondary); outline: none; box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.2); }
+        .custom-select { position: relative; width: 100%; }
+        .select-selected { background-color: white; padding: 12px 15px; border: 1px solid #ddd; border-radius: 10px; cursor: pointer; transition: var(--transition); display: flex; justify-content: space-between; align-items: center; font-size: clamp(0.9rem, 2.5vw, 1rem); }
+        .select-selected:after { content: "▾"; font-size: 1.2rem; transition: var(--transition); }
+        .select-selected.select-arrow-active:after { transform: rotate(180deg); }
+        .select-selected:hover, .select-selected.select-arrow-active { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.1); }
+        .select-items { position: absolute; background-color: white; top: 100%; left: 0; right: 0; z-index: 99; border-radius: 0 0 10px 10px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .select-items.active { max-height: 300px; overflow-y: auto; }
+        .select-group { padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+        .select-group:last-child { border-bottom: none; }
+        .select-group-title { padding: 10px 15px; font-weight: 600; color: var(--primary); background-color: #f9f9f9; font-size: 0.9rem; }
+        .select-item { padding: 10px 15px; cursor: pointer; transition: var(--transition); border-left: 3px solid transparent; font-size: clamp(0.85rem, 2vw, 0.9rem); }
+        .select-item:hover { background-color: var(--light-blue); border-left-color: var(--accent); }
+        .select-item.selected { background-color: var(--light-blue); border-left-color: var(--secondary); font-weight: 600; }
+        textarea.form-control { min-height: 120px; resize: vertical; }
+       
+        /* Footer */
+        footer { background: var(--primary); color: white; padding: 70px 0 30px; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-column h3 { color: white; margin-bottom: 25px; font-size: 1.5rem; position: relative; padding-bottom: 15px; }
+        .footer-column h3:after { content: ''; position: absolute; bottom: 0; left: 0; width: 50px; height: 3px; background: var(--accent); transition: var(--transition); }
+        .footer-column:hover h3:after { width: 80px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 12px; transition: var(--transition); }
+        .footer-links li:hover { transform: translateX(5px); }
+        .footer-links a { color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: var(--transition); display: flex; align-items: center; gap: 8px; font-size: clamp(0.85rem, 2vw, 0.9rem); }
+        .footer-links a:before { content: '▸'; color: var(--accent); font-size: 0.8rem; }
+        .footer-links a:hover { color: var(--accent); }
+        .social-links { display: flex; gap: 15px; margin-top: 25px; }
+        .social-links a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; color: white; text-decoration: none; transition: var(--transition); }
+        .social-links a:hover { background: var(--accent); transform: translateY(-5px); }
+        .copyright { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); }
+       
+        /* Fixed WhatsApp Button */
+        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 25px; right: 25px; background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; font-size: 30px; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); z-index: 1000; display: flex; align-items: center; justify-content: center; transition: var(--transition); animation: pulse 2s infinite; text-decoration: none; }
+        .whatsapp-float:hover { background-color: #128C7E; transform: scale(1.1); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4); }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+       
+        /* Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+       
+        /* Responsive Styles */
+        @media (max-width: 992px) { .about-content, .contact-container { flex-direction: column; grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            .hero { padding: 200px 0 80px; }
+            .stats-container { grid-template-columns: 1fr; }
+            .contact-item { flex-direction: column; text-align: center; gap: 10px; }
+            .select-items { position: relative; }
+            .logo-text { font-size: 1.5rem; }
+            section { padding: 60px 0; }
+            .header-container { padding: 10px 0; }
+        }
+        @media (max-width: 576px) {
+            .hero { padding: 180px 0 60px; }
+            .hero-btns, .about-buttons { flex-direction: column; align-items: center; }
+            .about-buttons { align-items: flex-start; }
+            .btn { width: 100%; max-width: 250px; }
+            .contact-form { padding: 20px; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 24px; bottom: 20px; right: 20px; }
+            .footer-content { grid-template-columns: 1fr; }
+            .mobile-nav { width: 85%; }
+        }
+        @media (max-width: 400px) {
+            .logo-container { gap: 10px; }
+            .logo-img { width: 50px; height: 50px; }
+            .logo-text { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                 <img src="assets/raghav-associates-logo.png" alt="Raghav & Associates Logo" class="logo-img">
+                <a href="#" class="logo-text">Raghav & Associates</a>
+            </div>
+           
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#gemini-analyzer">AI Analysis</a></li>
+                    <li><a href="#process">Our Process</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+           
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="mobile-menu-overlay"></div>
+
+
+    <nav class="mobile-nav">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#gemini-analyzer">AI Analysis</a></li>
+            <li><a href="#process">Our Process</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>Professional Business Registration & Compliance Services</h1>
+            <p>Raghav & Associates helps you start and grow your business with streamlined company registration and tax services. We simplify legal processes so you can focus on your business growth.</p>
+            <div class="hero-btns">
+                <a href="#services" class="btn">Explore Our Services</a>
+                <a href="#contact" class="btn btn-secondary">Schedule Consultation</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Gemini AI Analyzer Section -->
+    <section id="gemini-analyzer">
+        <div class="container">
+            <h2>✨ Get an AI-Powered Startup Analysis</h2>
+            <p class="section-intro">Have a business idea? Get instant, valuable insights from our AI-powered tool to understand your next steps in the Indian market.</p>
+            <div class="analyzer-box">
+                <textarea id="idea-input" placeholder="e.g., A cloud kitchen that delivers healthy home-style meals."></textarea>
+                <button id="analyze-btn" class="btn">
+                    Analyze My Idea
+                </button>
+                <div class="loader" id="loader"></div>
+                <div id="gemini-result"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Process Section -->
+    <section id="process" class="process-section">
+        <div class="container">
+            <h2>How We Work</h2>
+            <p class="section-intro">Our simple 4-step process to get your business registered and compliant</p>
+           
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-comments"></i></div>
+                    <h3>Consultation</h3>
+                    <p>We understand your business needs and recommend the best structure.</p>
+                </div>
+               
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-file-signature"></i></div>
+                    <h3>Documentation</h3>
+                    <p>We handle all paperwork and documentation requirements for you.</p>
+                </div>
+               
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-rocket"></i></div>
+                    <h3>Registration</h3>
+                    <p>Fast-track registration with the relevant government authorities.</p>
+                </div>
+               
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Ongoing Support</h3>
+                    <p>Continuous compliance support and advisory to keep you on track.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container mx-auto">
+            <!-- Core Services -->
+            <div class="mb-16">
+                <h2>Our Core Services</h2>
+                 <p class="section-intro">The essential foundations for your business's legal structure, compliance, and financial operations.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full" style="background-color: #E0F2F1; color: #00796B;"><i data-lucide="building-2"></i></div><div class="new-service-card-content"><h3>Private Limited Company</h3><p>The most popular corporate entity for startups and growing businesses.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full" style="background-color: #E0F2F1; color: #00796B;"><i data-lucide="users"></i></div><div class="new-service-card-content"><h3>Limited Liability Partnership</h3><p>A flexible business model blending partnership and corporate benefits.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full" style="background-color: #E0F2F1; color: #00796B;"><i data-lucide="user-circle"></i></div><div class="new-service-card-content"><h3>One Person Company</h3><p>Empowers solo entrepreneurs with a separate legal business entity.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full" style="background-color: #E0F2F1; color: #00796B;"><i data-lucide="handshake"></i></div><div class="new-service-card-content"><h3>Partnership Firm</h3><p>A traditional business structure governed by a partnership deed.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full" style="background-color: #E0F2F1; color: #00796B;"><i data-lucide="building"></i></div><div class="new-service-card-content"><h3>Public Limited Company</h3><p>For large-scale enterprises looking to raise capital from the public.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full" style="background-color: #E0F2F1; color: #00796B;"><i data-lucide="shopping-cart"></i></div><div class="new-service-card-content"><h3>GeM Registration</h3><p>Access the Government e-Marketplace to sell products and services.</p></div></div>
+                </div>
+            </div>
+            <!-- Other Services -->
+            <div id="other-services">
+                <div class="text-center">
+                    <h2>Other Services</h2>
+                    <p class="section-intro">A comprehensive suite of solutions to ensure your business remains compliant and protected.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="piggy-bank"></i></div><div class="new-service-card-content"><h3>Nidhi Company</h3><p>Formed to borrow and lend money among its members, fostering thrift.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="heart-handshake"></i></div><div class="new-service-card-content"><h3>Section 8 Company</h3><p>For non-profit organizations dedicated to promoting social welfare or charity.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="university"></i></div><div class="new-service-card-content"><h3>Society Registration</h3><p>Establish a self-governing body for scientific, literary, or charitable purposes.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="landmark"></i></div><div class="new-service-card-content"><h3>Trust Registration & Renewal</h3><p>Create a legal entity for managing assets for charitable or private purposes.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="file-plus-2"></i></div><div class="new-service-card-content"><h3>GST Registration</h3><p>Mandatory tax registration for businesses exceeding certain turnover limits.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="factory"></i></div><div class="new-service-card-content"><h3>MSME / Udyam Registration & Renewal</h3><p>Official registration for micro, small, and medium enterprises to avail benefits.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="globe-2"></i></div><div class="new-service-card-content"><h3>Import / Export Code (IEC)</h3><p>A primary requirement for any business involved in international trade.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="rocket"></i></div><div class="new-service-card-content"><h3>Startup India (DPIIT)</h3><p>Recognition for eligible startups, unlocking various government schemes.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="utensils-crossed"></i></div><div class="new-service-card-content"><h3>FSSAI (Food License)</h3><p>Essential for any business involved in the food processing or sales industry.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="shield-plus"></i></div><div class="new-service-card-content"><h3>PF & ESIC Registration</h3><p>Employee welfare registrations for provident fund and health insurance.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="key-round"></i></div><div class="new-service-card-content"><h3>Digital Signature (DSC)</h3><p>A secure digital key for signing electronic documents and online filings.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="helping-hand"></i></div><div class="new-service-card-content"><h3>12A & 80G Registration</h3><p>Certifications for NGOs to receive tax exemptions and provide donor benefits.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="flag"></i></div><div class="new-service-card-content"><h3>Niti Aayog / CSR-1</h3><p>Mandatory registration for NGOs seeking to receive corporate social responsibility funds.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="file-stack"></i></div><div class="new-service-card-content"><h3>GST Return Filing</h3><p>Timely filing of GST returns to maintain compliance and claim input credits.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="scissors"></i></div><div class="new-service-card-content"><h3>TDS/TCS Return Filing</h3><p>Quarterly filing of returns for tax deducted or collected at source.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="receipt"></i></div><div class="new-service-card-content"><h3>GST Refund Claims</h3><p>Assistance in filing and processing claims for GST refunds from the government.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="landmark"></i></div><div class="new-service-card-content"><h3>Income Tax Return Filing</h3><p>Complete ITR filing services for individuals, businesses, and corporates.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="file-check-2"></i></div><div class="new-service-card-content"><h3>ROC Filings</h3><p>Annual and event-based compliance filings with the Registrar of Companies.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="gavel"></i></div><div class="new-service-card-content"><h3>Reply to Legal Notices</h3><p>Expert assistance in drafting responses to notices from tax departments.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="percent-circle"></i></div><div class="new-service-card-content"><h3>80-IAC Tax Exemption</h3><p>Helping eligible startups claim a 100% tax rebate on profits for three years.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="shield-check"></i></div><div class="new-service-card-content"><h3>Trademark Registration</h3><p>Protect your brand identity, logo, and name from being used by others.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="copyright"></i></div><div class="new-service-card-content"><h3>Copyright Registration</h3><p>Secure legal ownership over your original literary, artistic, or creative works.</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="award"></i></div><div class="new-service-card-content"><h3>ISO 9001:2015</h3><p>Achieve the global standard for a Quality Management System (QMS).</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="leaf"></i></div><div class="new-service-card-content"><h3>ISO 14001</h3><p>Implement an effective Environmental Management System (EMS).</p></div></div>
+                    <div class="new-service-card"><div class="flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 text-gray-600 mb-4"><i data-lucide="soup"></i></div><div class="new-service-card-content"><h3>ISO 22000</h3><p>Certification for Food Safety Management Systems (FSMS).</p></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2>What Our Clients Say</h2>
+            <p class="section-intro">Don't just take our word for it - hear from businesses we've helped succeed.</p>
+           
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Raghav & Associates made our company registration incredibly smooth. Their expertise saved us time and helped us avoid common pitfalls."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">VM</div>
+                        <div class="author-info">
+                            <h4>Vishnukant Mishra</h4>
+                            <p>Tech Startup Founder</p>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                       <p>"The team's attention to detail in GST compliance has been exceptional. They're always available to answer our questions promptly."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PS</div>
+                        <div class="author-info">
+                            <h4>Priya Singh</h4>
+                            <p>Retail Business Owner</p>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"As a first-time entrepreneur, I appreciated their patient guidance through the entire registration process. Highly recommended!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">ST</div>
+                        <div class="author-info">
+                            <h4>Shivam Tiwari</h4>
+                            <p>OPC Registration Client</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <h2 class="stats-heading">Why Choose Our Services</h2>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <span class="stat-text">Expert Guidance</span>
+                    <p>Our team provides knowledgeable advice on business regulations and tax matters.</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <span class="stat-text">Efficient Processing</span>
+                    <p>We complete registrations and filings efficiently to save you time and effort.</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <span class="stat-text">Dedicated Support</span>
+                    <p>We provide personalized support for all your business compliance needs.</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <span class="stat-text">Complete Compliance</span>
+                    <p>We ensure your business follows all legal requirements to avoid complications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Raghav & Associates</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Starting a business is an exciting journey, but we know the path can be filled with confusing paperwork and complex rules. We founded Raghav & Associates right here in Prayagraj because we believe entrepreneurs should be free to focus on their vision, not get stuck on legal hurdles.</p>
+                    <p>Our mission is simple: to be your trusted partner. We handle the complexities of registrations and compliance with clear, straightforward guidance, making the whole process simple for you. We're a new firm with a modern approach, dedicated to helping your business build a strong foundation for success.</p>
+                   
+                    <div class="about-buttons">
+                        <a href="#contact" class="btn">Get In Touch</a>
+                        <a href="https://g.page/r/Ccs9gZGbGIIIEBM/review" target="_blank" class="btn btn-accent">Leave a Review</a>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-building"></i>
+                        <p style="font-family: 'Poppins', sans-serif;">Raghav & Associates</p>
+                        <p>Professional Business Services</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <p class="section-intro">Find answers to common questions about business registration, compliance, and our services.</p>
+           
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Which business structure is right for me? (e.g., LLP vs. Pvt Ltd)</h3>
+                        <div class="faq-icon"><i class="fas fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Choosing the right structure depends on your goals. A <strong>Private Limited (Pvt Ltd) Company</strong> is often preferred by startups seeking funding and wanting a scalable structure with limited liability. An <strong>LLP (Limited Liability Partnership)</strong> offers the flexibility of a partnership with the benefit of limited liability and has fewer compliance burdens, making it ideal for professional firms. A <strong>Sole Proprietorship</strong> is the simplest to start but offers no liability protection. We can help you decide based on your specific vision, funding needs, and long-term goals.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Is GST registration mandatory for my new business?</h3>
+                        <div class="faq-icon"><i class="fas fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>GST registration is mandatory if your annual turnover exceeds ₹40 lakhs for goods or ₹20 lakhs for services (with some exceptions for special category states). However, it is also compulsory for businesses involved in e-commerce, interstate trade, or for those who wish to claim input tax credit (ITC). Getting GST registration from the start can make your business appear more credible to clients and suppliers.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What are the annual compliances after registering my company?</h3>
+                        <div class="faq-icon"><i class="fas fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>After incorporation, a Private Limited Company must adhere to several key annual compliances with the Registrar of Companies (ROC). These typically include: <ul><li>Filing Annual Returns (Form MGT-7/7A)</li><li>Filing Financial Statements (Form AOC-4)</li><li>Conducting at least four Board Meetings and one Annual General Meeting (AGM)</li><li>Maintaining statutory registers and minutes of meetings</li><li>Filing Income Tax Returns and completing a statutory audit.</li></ul><p>We provide comprehensive compliance packages to ensure you never miss a deadline.</p></p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I register my business with a residential address?</h3>
+                        <div class="faq-icon"><i class="fas fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, you can use a residential address as the registered office for your company, provided you have the legal right to use the property for business purposes. You will need to provide a No Objection Certificate (NOC) from the property owner and submit a recent utility bill (like electricity or water bill) as proof of address. This is a common and cost-effective option for many startups and home-based businesses.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is the difference between a Trademark and a Copyright?</h3>
+                        <div class="faq-icon"><i class="fas fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>While both protect intellectual property, they cover different things. A <strong>Trademark</strong> protects brand identity elements like a business name, logo, or slogan that distinguishes your goods or services from others. A <strong>Copyright</strong> protects original creative works like literature, music, artistic works, software code, and website content. In short, a trademark protects your brand, while a copyright protects your creative output.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <p class="section-intro">Contact us for professional advice on business registration, compliance, and tax services. We're here to help your business succeed.</p>
+           
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item" onclick="window.open('tel:9208759001')"><div class="contact-icon"><i class="fas fa-phone-alt"></i></div><div class="contact-details"><h3>Call Us</h3><p>9208759001</p></div></div>
+                    <div class="contact-item" onclick="window.open('https://wa.me/919451971817', '_blank')"><div class="contact-icon"><i class="fab fa-whatsapp"></i></div><div class="contact-details"><h3>WhatsApp</h3><p>9451971817</p></div></div>
+                    <div class="contact-item" onclick="window.open('mailto:i.raghavassociates@gmail.com')"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div class="contact-details"><h3>Email Us</h3><p>i.raghavassociates@gmail.com</p></div></div>
+                    <div class="contact-item" onclick="window.open('https://maps.app.goo.gl/YSBEDX4jTzk7Knxz7', '_blank')"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div class="contact-details"><h3>Visit Our Office</h3><p>1048 Hari Om Nilayam, Nirala Marg, Daraganj, Prayagraj - 211006</p></div></div>
+                </div>
+               
+                <div class="contact-form">
+                    <form action="https://formspree.io/f/mqaykvgp" method="POST">
+                        <div class="form-group"><label for="name">Your Name</label><input type="text" id="name" name="name" class="form-control" required></div>
+                        <div class="form-group"><label for="email">Your Email</label><input type="email" id="email" name="email" class="form-control" required></div>
+                        <div class="form-group"><label for="phone">Phone Number</label><input type="tel" id="phone" name="phone" class="form-control" required></div>
+                        <div class="form-group">
+                            <label for="service">Service Required</label>
+                            <div class="custom-select">
+                                <div class="select-selected">Select a service</div>
+                                <div class="select-items">
+                                    <div class="select-group"><div class="select-group-title">Business Formations</div><div class="select-item" data-value="Private Limited Company">Private Limited Company</div><div class="select-item" data-value="Limited Liability Partnership (LLP)">Limited Liability Partnership (LLP)</div><div class="select-item" data-value="One Person Company (OPC)">One Person Company (OPC)</div><div class="select-item" data-value="Partnership Firm">Partnership Firm</div><div class="select-item" data-value="Public Limited Company">Public Limited Company</div><div class="select-item" data-value="Nidhi Company">Nidhi Company</div><div class="select-item" data-value="Section 8 Company">Section 8 Company</div><div class="select-item" data-value="Society Registration">Society Registration</div><div class="select-item" data-value="Trust Registration & Renewal">Trust Registration & Renewal</div></div>
+                                    <div class="select-group"><div class="select-group-title">Registrations & Licenses</div><div class="select-item" data-value="GST Registration">GST Registration</div><div class="select-item" data-value="MSME / Udyam Registration & Renewal">MSME / Udyam Registration & Renewal</div><div class="select-item" data-value="Import / Export Code (IEC)">Import / Export Code (IEC)</div><div class="select-item" data-value="Startup India (DPIIT)">Startup India (DPIIT)</div><div class="select-item" data-value="GeM Registration">GeM Registration</div><div class="select-item" data-value="FSSAI (Food License)">FSSAI (Food License)</div><div class="select-item" data-value="PF & ESIC Registration">PF & ESIC Registration</div><div class="select-item" data-value="12A & 80G Registration">12A & 80G Registration</div><div class="select-item" data-value="Niti Aayog / CSR-1">Niti Aayog / CSR-1</div><div class="select-item" data-value="Digital Signature (DSC)">Digital Signature (DSC)</div></div>
+                                    <div class="select-group"><div class="select-group-title">Filings & Compliances</div><div class="select-item" data-value="GST Return Filing">GST Return Filing</div><div class="select-item" data-value="TDS/TCS Return Filing">TDS/TCS Return Filing</div><div class="select-item" data-value="GST Refund Claims">GST Refund Claims</div><div class="select-item" data-value="Income Tax Return Filing">Income Tax Return Filing</div><div class="select-item" data-value="ROC Filings">ROC Filings</div><div class="select-item" data-value="Reply to Legal Notices">Reply to Legal Notices</div><div class="select-item" data-value="80-IAC Tax Exemption">80-IAC Tax Exemption</div></div>
+                                    <div class="select-group"><div class="select-group-title">Intellectual Property & ISO</div><div class="select-item" data-value="Trademark Registration">Trademark Registration</div><div class="select-item" data-value="Copyright Registration">Copyright Registration</div><div class="select-item" data-value="ISO 9001:2015">ISO 9001:2015</div><div class="select-item" data-value="ISO 14001">ISO 14001</div><div class="select-item" data-value="ISO 22000">ISO 22000</div></div>
+                                    <div class="select-group"><div class="select-item" data-value="Other/Consultation">Other/Consultation</div></div>
+                                </div>
+                                <input type="hidden" name="service" id="service" required>
+                            </div>
+                        </div>
+                        <div class="form-group"><label for="message">Your Message</label><textarea id="message" name="message" class="form-control" placeholder="Tell us about your requirements..." required></textarea></div>
+                        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Raghav & Associates</h3>
+                    <p>Professional business registration and compliance services to help your business grow with full legal compliance.</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/iraghavassociates/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/iwraghav/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://g.page/r/Ccs9gZGbGIIIEBM/review" target="_blank" title="Leave a Google Review"><i class="fab fa-google"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#process">Our Process</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Our Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#services">Business Registration</a></li>
+                        <li><a href="#services">GST Services</a></li>
+                        <li><a href="#services">Income Tax Solutions</a></li>
+                        <li><a href="#services">MSME Registration</a></li>
+                        <li><a href="#services">Compliance Management</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright"><p>© Copyright 2025 Raghav & Associates. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+
+    <!-- Fixed WhatsApp Button -->
+    <a href="https://wa.me/919451971817" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            lucide.createIcons();
+        });
+
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mobileNav = document.querySelector('.mobile-nav');
+        const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+       
+        menuToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+            document.body.style.overflow = this.classList.contains('active') ? 'hidden' : '';
+        });
+       
+        function closeMobileMenu() {
+            menuToggle.classList.remove('active');
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        mobileOverlay.addEventListener('click', closeMobileMenu);
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+       
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const wasActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item.active').forEach(openItem => {
+                    if (openItem !== item) { openItem.classList.remove('active'); }
+                });
+                if (!wasActive) { item.classList.toggle('active'); }
+            });
+        });
+       
+        document.querySelectorAll('.custom-select').forEach(select => {
+            const selected = select.querySelector('.select-selected');
+            const items = select.querySelector('.select-items');
+            const hiddenInput = select.querySelector('input[type="hidden"]');
+           
+            selected.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const wasActive = items.classList.contains('active');
+                closeAllDropdowns();
+                if (!wasActive) {
+                    items.classList.add('active');
+                    this.classList.add('select-arrow-active');
+                }
+            });
+           
+            select.querySelectorAll('.select-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    selected.textContent = this.textContent;
+                    hiddenInput.value = this.getAttribute('data-value');
+                    closeAllDropdowns();
+                });
+            });
+        });
+
+
+        function closeAllDropdowns() {
+            document.querySelectorAll('.select-items').forEach(i => i.classList.remove('active'));
+            document.querySelectorAll('.select-selected').forEach(s => s.classList.remove('select-arrow-active'));
+        }
+        document.addEventListener('click', closeAllDropdowns);
+       
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const fadeInOnScroll = () => {
+            fadeElements.forEach(element => {
+                if (element.getBoundingClientRect().top < window.innerHeight - 150) {
+                    element.classList.add('visible');
+                }
+            });
+        };
+        window.addEventListener('scroll', fadeInOnScroll);
+        fadeInOnScroll();
+       
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.padding = '5px 0';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.padding = '15px 0';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const ideaInput = document.getElementById('idea-input');
+        const geminiResultDiv = document.getElementById('gemini-result');
+        const loader = document.getElementById('loader');
+
+
+        function simpleMarkdownToHtml(markdown) {
+            let html = markdown
+                .replace(/\*\*(.*?)\*\*/g, '<h3>$1</h3>')
+                .replace(/\* (.*?)(?=\n|\r|$)/g, '<li>$1</li>');
+            html = html.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
+            html = html.replace(/<\/ul>\s*<ul>/g, '');
+            return html.replace(/(\r\n|\n|\r)/g, '<br>');
+        }
+
+
+        async function handleAnalysis() {
+            const userInput = ideaInput.value.trim();
+            if (!userInput) {
+                geminiResultDiv.style.display = 'block';
+                geminiResultDiv.innerHTML = '<p>Please enter your business idea first.</p>';
+                return;
+            }
+
+
+            loader.style.display = 'block';
+            geminiResultDiv.style.display = 'none';
+            analyzeBtn.disabled = true;
+            analyzeBtn.textContent = 'Analyzing...';
+
+
+            const apiKey = "AIzaSyBRT6FYZWIE2iovCGm8eJ7dLfW3VJCj85A";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+           
+            const availableServices = [
+                "Private Limited Company", "Limited Liability Partnership (LLP)", "One Person Company (OPC)",
+                "Partnership Firm", "Public Limited Company", "GeM Registration",
+                "Nidhi Company", "Section 8 Company", "Society Registration", "Trust Registration & Renewal", "GST Registration",
+                "MSME / Udyam Registration & Renewal", "Import / Export Code (IEC)", "Startup India (DPIIT)",
+                "FSSAI (Food License)", "PF & ESIC Registration", "Digital Signature (DSC)", "12A & 80G Registration",
+                "Niti Aayog / CSR-1", "GST Return Filing", "TDS/TCS Return Filing", "GST Refund Claims",
+                "Income Tax Return Filing", "ROC Filings", "Reply to Legal Notices", "80-IAC Tax Exemption",
+                "Trademark Registration", "Copyright Registration", "ISO 9001:2015", "ISO 14001", "ISO 22000"
+            ];
+           
+            const userQuery = `
+                Analyze the following business idea for the Indian market, specifically a Tier-2 city like Prayagraj.
+                Business Idea: "${userInput}"
+                Structure the analysis in markdown with these four sections:
+                **1. Market Potential:** Assess demand and audience.
+                **2. Key Registrations:** List the top 3-4 most essential registrations. IMPORTANT: You MUST only choose from this list: ${availableServices.join(', ')}.
+                **3. Potential Challenges:** Identify 2-3 common challenges.
+                **4. Suggested Next Steps:** Recommend two immediate actions.
+                Keep it professional and encouraging. No intro or outro.
+            `;
+           
+            const payload = { contents: [{ parts: [{ text: userQuery }] }] };
+           
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+
+                if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+
+
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    geminiResultDiv.innerHTML = simpleMarkdownToHtml(candidate.content.parts[0].text);
+                } else {
+                    throw new Error("Invalid API response structure.");
+                }
+
+
+            } catch (error) {
+                console.error("Gemini API call failed:", error);
+                geminiResultDiv.innerHTML = '<p>Sorry, we couldn\'t analyze your idea at the moment. Please try again later.</p>';
+            } finally {
+                loader.style.display = 'none';
+                geminiResultDiv.style.display = 'block';
+                analyzeBtn.disabled = false;
+                analyzeBtn.textContent = 'Analyze My Idea';
+            }
+        }
+
+
+        analyzeBtn.addEventListener('click', handleAnalysis);
+    </script>
+</body>
+</html>
