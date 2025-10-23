@@ -354,7 +354,6 @@
                     </div>
                     <div class="item-content">
                         <span class="item-label">Raghav & Associates</span>
-                        <!-- --- NEW TAGLINE UPDATED --- -->
                         <span class="item-value">From Idea to Enterprise, Seamlessly.</span>
                     </div>
                 </div>
@@ -389,7 +388,8 @@
                     <div class="social-icon-wrapper">
                         <i class="fab fa-whatsapp"></i>
                     </div>
-                    <div class="item-content">
+                    <!-- --- TYPO FIXED --- -->
+                    <div class="item-content"> 
                         <span class="item-value">WhatsApp</span>
                         <span class="item-label">Send a Message</span>
                     </div>
@@ -454,6 +454,7 @@
             vcfButton.classList.add('loading');
             vcfButtonText.textContent = 'Preparing...';
 
+            // --- VCF LOGO ---
             const logoUrl = 'https://raghavassociates.xyz/assets/vcard-logo.png';
             
             const base64PhotoData = await fetchImageAsBase64(logoUrl);
@@ -496,4 +497,5 @@ END:VCARD`;
 
 </body>
 </html>
+
 
