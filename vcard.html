@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Raghvendra Mishra - Raghav & Associates</title>
     
-    <!-- --- UPGRADE: New Font --- -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -32,7 +31,6 @@
             --icon-color: var(--text-secondary);
             --icon-circle-bg: #f3f4f6; /* Same as body bg for "inset" feel */
 
-            /* --- UPGRADE: New Font --- */
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
@@ -74,23 +72,14 @@
             text-align: center;
         }
 
-        /* --- UPGRADE: Real Logo --- */
-        .logo-circle {
+        .logo-image-circle {
             width: 110px;
             height: 110px;
-            background-color: var(--btn-primary-bg);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            border-radius: 50%; 
             margin-bottom: 25px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            overflow: hidden; /* To contain the image */
-        }
-        
-        .logo-image {
-            width: 80%; /* Adjust logo size within the circle */
-            height: auto;
+            border: 2px solid rgba(255, 255, 255, 0.4); 
+            object-fit: cover; 
         }
 
         .header-section h1 {
@@ -100,7 +89,6 @@
             color: var(--text-primary-on-dark);
         }
 
-        /* --- UPGRADE: New Subtitle --- */
         .header-section .subtitle {
             font-size: 17px;
             color: var(--text-secondary-on-dark);
@@ -161,6 +149,12 @@
             text-decoration: none;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+            cursor: pointer; /* Indicate it's clickable */
+        }
+        
+        .add-contact-btn.loading {
+             opacity: 0.7;
+             cursor: wait;
         }
 
         .add-contact-btn i {
@@ -173,15 +167,13 @@
             opacity: 0.9;
         }
 
-        /* --- Tagline removed from here --- */
-
         /* Section Title */
         .section-title {
             font-size: 22px;
             font-weight: 600;
             color: var(--text-primary);
             padding: 0 0 15px;
-            margin-top: 10px; /* Reduced margin */
+            margin-top: 10px; 
         }
 
         /* Individual list cards (White) */
@@ -203,7 +195,6 @@
             transform: scale(0.98);
         }
 
-        /* --- UPGRADE: Circled Icon --- */
         .list-item-icon-circle {
             width: 40px;
             height: 40px;
@@ -213,7 +204,7 @@
             align-items: center;
             justify-content: center;
             margin-right: 15px;
-            flex-shrink: 0; /* Prevent circle from shrinking */
+            flex-shrink: 0;
         }
         
         .list-item-icon-circle i {
@@ -221,14 +212,13 @@
             color: var(--icon-color);
         }
         
-        /* Remove dedicated icon style */
         .list-item-card i.item-icon {
              display: none;
         }
 
         .list-item-card .item-content {
             flex-grow: 1;
-            overflow: hidden; /* For text ellipsis if needed */
+            overflow: hidden;
         }
 
         .list-item-card .item-label {
@@ -241,7 +231,7 @@
         .list-item-card .item-value {
             font-size: 17px;
             color: var(--text-primary);
-            font-weight: 500; /* Slightly bolder */
+            font-weight: 500;
             display: block;
             word-break: break-word;
         }
@@ -252,16 +242,14 @@
             align-items: center;
         }
         
-        /* --- UPGRADE: Bigger Social Icons --- */
         .list-item-card.social-item .social-icon-wrapper {
-             font-size: 28px; /* Bigger icon */
-             width: 40px; /* Same width as circles */
+             font-size: 28px;
+             width: 40px;
              text-align: center;
              margin-right: 15px;
              flex-shrink: 0;
         }
 
-        /* --- UPGRADE: New layout for social text --- */
         .list-item-card.social-item .item-content {
             display: flex;
             flex-direction: column;
@@ -270,7 +258,7 @@
         
         .list-item-card.social-item .item-value {
              font-size: 17px;
-             font-weight: 600; /* Bolder */
+             font-weight: 600;
              color: var(--text-primary);
         }
         
@@ -306,18 +294,15 @@
 
     <div class="vcard-container">
 
-        <!-- Black Header Section -->
         <header class="header-section">
-            <div class="logo-circle">
-                <!-- --- UPGRADE: Real Logo --- -->
-                <img src="https://raghavassociates.xyz/assets/raghav-associates-logo-white.png" alt="Raghav & Associates Logo" class="logo-image">
-            </div>
+            <img src="https://raghavassociates.xyz/assets/raghav-associates-logo-white.png" 
+                 alt="Raghav & Associates Logo" 
+                 class="logo-image-circle">
+            
             <h1>Raghvendra Mishra</h1>
-            <!-- --- UPGRADE: New Subtitle --- -->
             <p class="subtitle">Legal & Business Consultant</p>
         </header>
 
-        <!-- Overlapping White Circle Buttons -->
         <div class="contact-icon-buttons">
             <a href="tel:+919208759001" class="icon-button" aria-label="Call Raghvendra Mishra">
                 <i class="fas fa-phone-alt"></i>
@@ -327,18 +312,15 @@
             </a>
         </div>
 
-        <!-- Main Content Area (Light Grey) -->
         <main class="main-content">
 
-            <!-- Black "Add Contact" Button -->
-            <a href="#" id="saveVcfButton" class="add-contact-btn">
-                <i class="fas fa-user-plus"></i> Add Contact
+            <a id="saveVcfButton" class="add-contact-btn">
+                <i class="fas fa-user-plus"></i>
+                <span>Add Contact</span>
             </a>
             
-            <!-- Contact Details List -->
             <div class="list-container">
                 <a href="tel:+919208759001" class="list-item-card">
-                    <!-- --- UPGRADE: Circled Icon --- -->
                     <div class="list-item-icon-circle">
                         <i class="fas fa-phone-alt"></i>
                     </div>
@@ -356,7 +338,7 @@
                         <span class="item-value">ask@raghavassociates.xyz</span>
                     </div>
                 </a>
-                <a href="https://www.raghavassociates.xyz" target="_blank" rel="noopener noreferrer" class="list-item-card">
+                <a href="httpsS://www.raghavassociates.xyz" target="_blank" rel="noopener noreferrer" class="list-item-card">
                     <div class="list-item-icon-circle">
                         <i class="fas fa-globe"></i>
                     </div>
@@ -366,10 +348,7 @@
                     </div>
                 </a>
                 
-                <!-- --- UPGRADE: "Visit Us" tile removed --- -->
-                
-                <!-- --- UPGRADE: Firm Card Updated --- -->
-                <div class="list-item-card"> <!-- Not a link -->
+                <div class="list-item-card"> 
                     <div class="list-item-icon-circle">
                         <i class="fas fa-briefcase"></i>
                     </div>
@@ -382,12 +361,8 @@
 
             <h2 class="section-title">Find us on</h2>
 
-            <!-- Social Media List -->
             <div class="list-container">
-                <!-- --- UPGRADE: LinkedIn removed --- -->
-                
-                <!-- --- UPGRADE: Facebook Updated --- -->
-                <a href="https://www.facebook.com/share/1BYGKR3Mqd/" target="_blank" class="list-item-card social-item social-facebook">
+                <a href="httpsS://www.facebook.com/share/1BYGKR3Mqd/" target="_blank" class="list-item-card social-item social-facebook">
                     <div class="social-icon-wrapper">
                         <i class="fab fa-facebook-f"></i>
                     </div>
@@ -398,8 +373,7 @@
                     <i class="fas fa-chevron-right arrow-icon"></i>
                 </a>
                 
-                <!-- --- UPGRADE: Instagram Updated --- -->
-                <a href="https://www.instagram.com/iraghavassociates" target="_blank" class="list-item-card social-item social-instagram">
+                <a href="httpsS://www.instagram.com/iraghavassociates" target="_blank" class="list-item-card social-item social-instagram">
                     <div class="social-icon-wrapper">
                         <i class="fab fa-instagram"></i>
                     </div>
@@ -410,8 +384,7 @@
                     <i class="fas fa-chevron-right arrow-icon"></i>
                 </a>
 
-                <!-- --- UPGRADE: WhatsApp Added --- -->
-                <a href="https://wa.me/919451971817" target="_blank" class="list-item-card social-item social-whatsapp">
+                <a href="httpsS://wa.me/919451971817" target="_blank" class="list-item-card social-item social-whatsapp">
                     <div class="social-icon-wrapper">
                         <i class="fab fa-whatsapp"></i>
                     </div>
@@ -431,39 +404,94 @@
     </div>
 
     <script>
-        // --- JavaScript for VCF Download ---
-        document.getElementById('saveVcfButton').addEventListener('click', function(e) {
-            e.preventDefault(); 
+        // --- VCF Download Script with Base64 Image Embedding ---
 
-            // --- UPGRADE: VCF Updated (Address Removed) ---
-            const vcfContent = `BEGIN:VCARD
+        const vcfButton = document.getElementById('saveVcfButton');
+        const vcfButtonText = vcfButton.querySelector('span');
+
+        // Helper function to fetch and convert image to Base64
+        async function fetchImageAsBase64(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`Image not found: ${response.statusText}`);
+                
+                const blob = await response.blob();
+                
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        // We need to strip the "data:image/png;base64," prefix
+                        const base64data = reader.result.split(',')[1];
+                        resolve(base64data);
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(blob);
+                });
+            } catch (error) {
+                console.error("Failed to fetch logo for vCard:", error);
+                return null; // Return null if fetching fails
+            }
+        }
+
+        // Helper function to format Base64 for vCard (76 chars per line)
+        function formatBase64ForVCard(base64) {
+            if (!base64) return '';
+            // vCard standard requires line breaks and a space for long lines.
+            const lines = base64.match(/.{1,75}/g);
+            return lines.join('\r\n ');
+        }
+
+        // Main click event
+        vcfButton.addEventListener('click', async function(e) {
+            e.preventDefault(); 
+            
+            // Prevent multiple clicks
+            if (vcfButton.classList.contains('loading')) return;
+
+            // Show loading state
+            vcfButton.classList.add('loading');
+            vcfButtonText.textContent = 'Preparing...';
+
+            const logoUrl = 'https://raghavassociates.xyz/assets/raghav-associates-logo-white.png';
+            const base64PhotoData = await fetchImageAsBase64(logoUrl);
+            const formattedPhoto = formatBase64ForVCard(base64PhotoData);
+
+            let vcfContent = `BEGIN:VCARD
 VERSION:3.0
 FN:Raghvendra Mishra
 ORG:Raghav & Associates
 TITLE:Legal & Business Consultant
-PHOTO;VALUE=URL:https://raghavassociates.xyz/assets/raghav-associates-logo-white.png
-TEL;TYPE=CELL,VOICE:+919208759001
+`;
+
+            // Add photo only if it was successfully fetched and formatted
+            if (formattedPhoto) {
+                vcfContent += `PHOTO;ENCODING=b64;TYPE=PNG:${formattedPhoto}\r\n`;
+            }
+
+            vcfContent += `TEL;TYPE=CELL,VOICE:+919208759001
 TEL;TYPE=WORK,VOICE:+919451971817
 EMAIL;TYPE=PREF,INTERNET:ask@raghavassociates.xyz
 URL:https://www.raghavassociates.xyz
 END:VCARD`;
 
             const vcfData = "data:text/vcard;charset=utf-8," + encodeURIComponent(vcfContent);
+            
             const link = document.createElement("a");
             link.setAttribute("href", vcfData);
-            link.setAttribute("download", "Raghvendra_Mishra_Raghav_Associates.vcf");
+            link.setAttribute("download", "raghav-associates.vcf");
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            
+            // Reset button state
+            vcfButton.classList.remove('loading');
+            vcfButtonText.textContent = 'Add Contact';
         });
 
-        // --- JavaScript for Dynamic Year in Footer ---
         document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
 
 </body>
 </html>
-
-
 
 
