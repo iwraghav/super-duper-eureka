@@ -662,6 +662,7 @@
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
             margin-top: 30px;
+            /* justify-content: center; This will center the grid items */
         }
         .new-service-card {
             background-color: white;
@@ -1249,6 +1250,7 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <div class="particles"></div> <!-- Moved particles inside hero -->
         <div class="container hero-content">
             <h1>From Idea to Enterprise, Seamlessly.</h1>
             <p>Your vision deserves a strong foundation. We handle the complexities of business registration and compliance, so you can focus on what truly matters—growth.</p>
@@ -1412,7 +1414,7 @@
                     <div class="image-placeholder">
                         <i class="fas fa-landmark"></i>
                         <p>Raghav & Associates</p>
-                        <p class="text-lg text-gray-500 font-normal">Building Strong Foundations for Business</p>
+                        <p class="text-lg text-gray-500 font-normal">From Idea to Enterprise, Seamlessly.</p>
                     </div>
                 </div>
             </div>
@@ -1459,7 +1461,6 @@
     <!-- Footer -->
     <footer>
         <div class="particles"></div>
-        <div class="shimmer"></div>
         <div class="container">
             <div class="footer-content">
                 <!-- Footer content will be dynamically inserted -->
@@ -1546,7 +1547,7 @@
             const contactItemsData = [
                 { icon: 'fas fa-phone-alt', title: 'Call Us', detail: '9208759001', link: 'tel:9208759001' },
                 { icon: 'fab fa-whatsapp', title: 'WhatsApp', detail: '9451971817', link: 'https://wa.me/919451971817' },
-                { icon: 'fas fa-envelope', title: 'Email Us', detail: 'i.raghavassociates@gmail.com', link: 'mailto:i.raghavassociates@gmail.com' },
+                { icon: 'fas fa-envelope', title: 'Email Us', detail: 'ask@raghavassociates.xyz', link: 'mailto:ask@raghavassociates.xyz' },
                 { icon: 'fas fa-map-marker-alt', title: 'Visit Our Office', detail: '1048 Hari Om Nilayam, Nirala Marg, Daraganj, Prayagraj', link: 'https://maps.app.goo.gl/YSBEDX4jTzk7Knxz7' },
             ];
 
@@ -1613,9 +1614,9 @@
                     <h3>Raghav & Associates</h3>
                     <p>Your trusted partner for business registration and compliance services, dedicated to fostering your growth with complete legal and financial integrity.</p>
                     <div class="social-links">
-                        <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" target="_blank" title="Google Review"><i class="fab fa-google"></i></a>
+                        <a href="https://www.instagram.com/iraghavassociates" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/iwraghav/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.facebook.com/share/1BYGKR3Mqd/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                     </div>
                 </div>
                 <div class="footer-column">
@@ -1718,6 +1719,24 @@
                     footerParticlesContainer.appendChild(particle);
                 }
             }
+           
+            // Particle Animation for Hero
+            const heroParticlesContainer = document.querySelector('.hero .particles');
+            if (heroParticlesContainer) {
+                const particleCount = 30; // More particles for hero
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    const size = Math.random() * 6 + 2; // Slightly larger particles
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.bottom = `${Math.random() * 100}%`; // Start from bottom
+                    particle.style.animationDuration = `${Math.random() * 20 + 15}s`;
+                    particle.style.animationDelay = `${Math.random() * 15}s`;
+                    heroParticlesContainer.appendChild(particle);
+                }
+            }
 
             // Mobile Menu
             const menuToggle = document.querySelector('.menu-toggle');
@@ -1743,6 +1762,10 @@
             // FAQ Accordion
             document.querySelectorAll('.faq-item').forEach(item => {
                 item.querySelector('.faq-question').addEventListener('click', () => {
+                    // Optional: Close other active items
+                    // document.querySelectorAll('.faq-item.active').forEach(activeItem => {
+                    //     if (activeItem !== item) activeItem.classList.remove('active');
+                    // });
                     item.classList.toggle('active');
                 });
             });
@@ -1775,12 +1798,16 @@
             const slides = document.querySelectorAll('.testimonial-slide');
             const dotsContainer = document.getElementById('carousel-nav');
             let currentSlide = 0;
+            let slideInterval;
            
             if (slides.length > 0) {
                 slides.forEach((_, i) => {
                     const dot = document.createElement('span');
                     dot.className = 'carousel-dot';
-                    dot.addEventListener('click', () => goToSlide(i));
+                    dot.addEventListener('click', () => {
+                        goToSlide(i);
+                        resetInterval(); // Reset interval on manual navigation
+                    });
                     dotsContainer.appendChild(dot);
                 });
                 const dots = dotsContainer.querySelectorAll('.carousel-dot');
@@ -1794,9 +1821,18 @@
                 function nextSlide() {
                     goToSlide((currentSlide + 1) % slides.length);
                 }
+
+                function startInterval() {
+                    slideInterval = setInterval(nextSlide, 5000);
+                }
+
+                function resetInterval() {
+                    clearInterval(slideInterval);
+                    startInterval();
+                }
                
                 goToSlide(0); // Initialize first slide
-                setInterval(nextSlide, 5000);
+                startInterval(); // Start auto-slide
             }
 
             // AI Chat Assistant
@@ -1805,7 +1841,11 @@
             const sendBtn = document.getElementById('send-btn');
             const typingIndicator = document.getElementById('typing-indicator');
 
-            const API_KEY = "AIzaSyDzmT82Hy-peGK_Iv3c_8lJR7kL2lbufJI";
+            // --- IMPORTANT: The API Key is exposed here for demo purposes. ---
+            // --- In a real production environment, this key MUST be       ---
+            // --- kept secret on a server, and the API call should be     ---
+            // --- proxied through your backend.                           ---
+            const API_KEY = "AIzaSyDzmT82Hy-peGK_Iv3c_8lJR7kL2lbufJI"; // This is a placeholder/example key
 
             function addMessage(html, isUser = false) {
                 const messageDiv = document.createElement('div');
@@ -1824,26 +1864,38 @@
             function markdownToHtml(text) {
                 let html = text.trim();
                
+                // Convert lists
                 html = html.replace(/((?:^- .*(?:\n|$))+)/gm, (match) => {
                     const items = match.trim().split('\n').map(line => `<li>${line.substring(2).trim()}</li>`).join('');
-                    return `<ul style="list-style-type: disc; padding-left: 20px;">${items}</ul>`;
+                    return `<ul style="list-style-type: disc; padding-left: 20px; margin-bottom: 10px;">${items}</ul>`;
                 });
 
-                html = html.replace(/^### (.*$)/gm, '<h4>$1</h4>');
+                // Convert headings
+                html = html.replace(/^### (.*$)/gm, '<h4 style="margin-bottom: 8px;">$1</h4>');
+                
+                // Convert bold (both ** and *)
                 html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                 html = html.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
 
+                // Convert paragraphs
                 html = html.split('\n').map(line => {
                     line = line.trim();
                     if (line === '') return '';
+                    // Avoid wrapping already converted elements in <p>
                     if (line.startsWith('<ul') || line.startsWith('<h4') || line.startsWith('<li>')) {
                         return line;
                     }
-                    return `<p>${line}</p>`;
+                    return `<p style="margin-bottom: 10px;">${line}</p>`;
                 }).join('');
 
-                html = html.replace(/<p>(<ul.*<\/ul>)<\/p>/gs, '$1');
-                html = html.replace(/<p>(<h4.*<\/h4>)<\/p>/gs, '$1');
+                // Clean up empty paragraphs
+                html = html.replace(/<p style="margin-bottom: 10px;"><\/p>/g, '');
+                // Clean up paragraph wrapping lists/headings
+                html = html.replace(/<p style="margin-bottom: 10px;">(<ul.*<\/ul>)<\/p>/gs, '$1');
+                html = html.replace(/<p style="margin-bottom: 10px;">(<h4.*<\/h4>)<\/p>/gs, '$1');
+                // Remove last margin-bottom from the last element if it's a p
+                html = html.replace(/<p style="margin-bottom: 10px;">(.*?)<\/p>$/, '<p>$1</p>');
+
 
                 return html;
             }
@@ -1863,7 +1915,7 @@
                 1.  **NEVER** mention pricing, costs, or fees. If asked, politely deflect by saying, "For accurate pricing, it's best to schedule a free consultation with our experts."
                 2.  Only recommend services from this list: ${allServicesList}.
                 3.  Keep responses informative but not overly long. Encourage users to contact the firm for detailed advice.
-                4. Do not provide contact information like WhatsApp numbers or emails. Guide them to the contact section.`;
+                4.  Do not provide contact information like WhatsApp numbers or emails. Guide them to the contact section of the website.`;
 
                 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${API_KEY}`;
 
@@ -1903,13 +1955,18 @@
 
                 addMessage(userMessage, true);
                 chatInput.value = '';
-                chatInput.style.height = 'auto';
+                chatInput.style.height = 'auto'; // Reset height
                 showTyping(true);
 
-                const botResponse = await getAIResponse(userMessage);
-                showTyping(false);
-                const formattedResponse = markdownToHtml(botResponse);
-                addMessage(formattedResponse);
+                try {
+                    const botResponse = await getAIResponse(userMessage);
+                    const formattedResponse = markdownToHtml(botResponse);
+                    addMessage(formattedResponse);
+                } catch (error) {
+                     addMessage("I'm having a little trouble connecting. Please try again in a moment.");
+                } finally {
+                    showTyping(false);
+                }
             }
            
             sendBtn.addEventListener('click', handleUserMessage);
@@ -1921,8 +1978,8 @@
             });
 
              chatInput.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = (this.scrollHeight) + 'px';
+                this.style.height = 'auto'; // Reset height to shrink if text is deleted
+                this.style.height = (this.scrollHeight) + 'px'; // Set to scroll height
             });
 
             // Re-initialize Lucide icons after dynamic content is added
@@ -1931,4 +1988,5 @@
     </script>
 </body>
 </html>
+
 
