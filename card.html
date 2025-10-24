@@ -1,37 +1,36 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Raghvendra Mishra - Raghav & Associates</title>
-   
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-   
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-
     <style>
+        /* All CSS is identical to the previous file... */
         :root {
             --bg-header: #000000;
             --bg-body: #f3f4f6;
             --bg-card: #FFFFFF;
-           
+            
             --text-primary: #111827;
             --text-secondary: #6b7280;
-           
+            
             --text-primary-on-dark: #FFFFFF;
             --text-secondary-on-dark: #a8b2d1;
-           
+            
             --btn-primary-bg: #FFFFFF;
             --btn-primary-text: #000000;
             --btn-cta-bg: #000000;
             --btn-cta-text: #FFFFFF;
-           
+            
             --icon-color: var(--text-secondary);
             --icon-circle-bg: #f3f4f6;
-
 
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
@@ -74,20 +73,16 @@
 </head>
 <body>
 
-
     <div class="vcard-container">
 
-
         <header class="header-section">
-            <!-- This logo is for the webpage -->
-            <img src="https://raghavassociates.xyz/assets/raghav-associates-logo-white.png"
-                 alt="Raghav & Associates Logo"
+            <img src="https://raghavassociates.xyz/assets/raghav-associates-logo-white.png" 
+                 alt="Raghav & Associates Logo" 
                  class="logo-image-circle">
-           
+            
             <h1>Raghvendra Mishra</h1>
             <p class="subtitle">Legal & Business Consultant</p>
         </header>
-
 
         <div class="contact-icon-buttons">
             <a href="tel:+919208759001" class="icon-button" aria-label="Call Raghvendra Mishra">
@@ -98,15 +93,13 @@
             </a>
         </div>
 
-
         <main class="main-content">
-
 
             <a id="saveVcfButton" class="add-contact-btn">
                 <i class="fas fa-user-plus"></i>
                 <span>Add Contact</span>
             </a>
-           
+            
             <div class="list-container">
                 <a href="tel:+919208759001" class="list-item-card">
                     <div class="list-item-icon-circle">
@@ -135,8 +128,8 @@
                         <span class="item-value">www.raghavassociates.xyz</span>
                     </div>
                 </a>
-               
-                <div class="list-item-card">
+                
+                <div class="list-item-card"> 
                     <div class="list-item-icon-circle">
                         <i class="fas fa-briefcase"></i>
                     </div>
@@ -147,9 +140,7 @@
                 </div>
             </div>
 
-
             <h2 class="section-title">Find us on</h2>
-
 
             <div class="list-container">
                 <a href="https://www.facebook.com/share/1BYGKR3Mqd/" target="_blank" class="list-item-card social-item social-facebook">
@@ -162,7 +153,7 @@
                     </div>
                     <i class="fas fa-chevron-right arrow-icon"></i>
                 </a>
-               
+                
                 <a href="https://www.instagram.com/iraghavassociates" target="_blank" class="list-item-card social-item social-instagram">
                     <div class="social-icon-wrapper">
                         <i class="fab fa-instagram"></i>
@@ -174,12 +165,11 @@
                     <i class="fas fa-chevron-right arrow-icon"></i>
                 </a>
 
-
                 <a href="https://wa.me/919451971817" target="_blank" class="list-item-card social-item social-whatsapp">
                     <div class="social-icon-wrapper">
                         <i class="fab fa-whatsapp"></i>
                     </div>
-                    <div class="item-content">
+                    <div class="item-content"> 
                         <span class="item-value">WhatsApp</span>
                         <span class="item-label">Send a Message</span>
                     </div>
@@ -187,54 +177,42 @@
                 </a>
             </div>
 
-
             <footer>
-                <p>© <span id="currentYear">2024</span> Raghav & Associates</p>
+                <p>&copy; <span id="currentYear">2024</span> Raghav & Associates</p>
             </footer>
-
 
         </main>
     </div>
 
-
     <script>
         // --- VCF Download Script with HARDCODED Base64 Image ---
 
-
         const vcfButton = document.getElementById('saveVcfButton');
         const vcfButtonText = vcfButton.querySelector('span');
-       
-        // --- YOUR BASE64 STRING IS PASTED HERE ---
-        const base64LogoData = "Data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAVXmVYSWZNTQAqAAAACAAFAQAABAAAAAEAAAAAAQEABAAAAAEAAAAAArwAAQAACngAAABKh2kABAAAAAEAAArCARIABAAAAAEAAAAAAAAAADw/eHBhY2tldCBiZWdpbj0iPyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSBUZXN0LlNOQVBTSE9UIj4KICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICB4bWxuczpBdHRyaWI9Imh0dHA6Ly9ucy5hdHRyaWJ1dGlvbi5jb20vYWRzLzEuMC8iPgogICAgICA8QXR0cmliOkFkcz4KICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgIDxyZGY6bGkKICAgICAgICAgICAgQXR0cmliOkZiSWQ9IjUyNTI2NTkxNDE3OTU4MCIKICAgICAgICAgICAgQXR0cmliOkNyZWF0ZWQ9IjIwMjUtMTAtMjQiCiAgICAgICAgICAgIEF0dHJpYjpUb3VjaFR5cGU9IjIiCiAgICAgICAgICAgIEF0dHJpYjpFeHRJZD0iODhhYjIyNjYtNzE3MC00NzU4LThlNzYtOGNiNDRkNWI2MzIwIi8+CiAgICAgICAgPC9yZGY6U2VxPgogICAgICA8L0F0dHJpYjpBZHM+CiAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICjw/eHBhY2tldCBlbmQ9InciPz4AAZIIAAQAAAABAAAAAAAAAAAAAQK8AAEAAAp4AAAK5gAAAAA8P3hwYWNrZXQgYmVnaW49Ij8iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXBtaz0iQWRvYmUgWE1QIENvcmUgVGVzdC5TTkFQU0hPVCI+CiAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgeG1sbnM6QXR0cmliPSJodHRwOi8vbnMuYXR0cmlidXRpb24uY29tL2Fkcy8xLjAvIj4KICAgICAgPEF0dHJpYjpBZHM+CiAgICAgICAgPHJkZjpTZXE+CiAgICAgICAgICA8cmRmOmxpCiAgICAgICAgICAgIEF0dHJpYjpGYklkPSI1MjUyNjU5MTQxNzk1ODAiCiAgICAgICAgICAgIEF0dHJpYjpDcmVhdGVkPSIyMDI1LTEwLTI0IgogICAgICAgICAgICBBdHRyaWI6VG91Y2hUeXBlPSIyIgogICAgICAgICAgICBBdHRyaWI6RXh0SWQ9Ijg4YWIyMjY2LTcxNzAtNDc1OC04ZTc2LThjYjQ0ZDViNjMyMCIvPgogICAgICAgIDwvcmRmOlNlcT4KICAgICAgPC9BdHRyaWI6QWRzPgogICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8P3hwYWNrZXQgZW5kPSJ3Ij8+IkRpBwAAAAFzUkdCAK7OHOkAAAAEc0JJVAgICAh8CGSIAAAgAElEQVR4nO3dfWydVR0H8O957mvb9WXtWNt13coYe4EuA+RFmBOEAHGCvEfUoQESwRgkBhSQKYgmxBcCGtlEjMGAAgsEIhIRWBSc1gEbGwwQcN2YW7eC7ba+3Lb3Ps/z84/xXNrSl9vec+7Tc/v9JCeM9vY85z7r/e485znPOQqAgIjIAk7YDSAiyhUDi4iswcAiImswsIjIGgwsIrIGA4uIrMHAIiJrMLCIyBoMLCKyBgOLiKzBwCIiazCwiMgaDCwisgYDi4iswcAiImswsIjIGgwsIrIGA4uIrMHAIiJrMLCIyBoMLCKyBgOLiKzBwCIiazCwiMgaDCwisgYDi4iswcAiImswsIjIGgwsIrIGA4uIrMHAIiJrMLCIyBoMLCKyBgOLiKzBwCIiazCwiMgaDCwisgYDi4iswcAiImswsIjIGgwsIrIGA4uIrMHAIiJrMLCIyBoMLCKyBgOLiKzBwCIiazCwiMgaDCwisgYDi4iswcAiImswsIjIGgwsIrIGA4uIrMHAIiJrMLCIyBoMLCKyBgOLiKzBwCIiazCwiMgaDCwisgYDi4iswcAiImswsIjIGgwsIrIGA4uIrMHAIiJrRMNugA0aGxvR0NCAnTt3oqOjA57nQUSGvEYpBaUUAGS/N/w1ExHUFfzX9/0RXxMcIx6PIxaLIRKJQCmFTCaTLYNfN7yNRDZhYOWgqqoKf/rTn1BdXZ0NAKUUHMeBiMB1XWQyGXieB9d14bpu9s8HDhxAR0cHDh06hFQqhb6+PqRSKaRSKSilkEgkkEwmMWPGDFRVVWHmzJmora1FaWkpotEoYrFYtkSj0ewxfd/Phk7wNcf5qMMcfC8IuiDI+vr60NPTg5dffhkPPPAAnnjiCXieB8dxRgxFoqlGWCZWbr75ZhERyWQy4nme2Mj3ffE8b8h7ePHFF2XWrFkCQJRSoZ9nFpbhRX34B5qgoHe0detWLFy4MNvrCi65bCQf9twcx8HBgwdx7rnn4pVXXuHlI00ZDKw8KaVQUVGBvXv3oqSkxPrQCogIRARKKTz66KO45ppr0NXVFXazaJpjYGmilMLbb7+d7W0VkyC8tm7dilWrVqG9vT3sJtE0xcDSyHEcpFIpxONx46Elo9yJHH53UfcxRQQbN27E6aefrr1+ovEwsDSLxWJIpVKIRvXegB0cUHv27MGLL76IHTt2oL29HV1dXejv70dlZSUWLFiAE044ASeffDJmzpyZHZMCMOQuYr5t8X0fN910E+666y4tdRLlKvSR/2Ir7733nvi+r/2uXlNT04Tu3imlpKKiQi6//HJJpVLieZ62dvm+L77vy65du0I/3yzTp7CHZUBFRQU6OzsRiUS01en7PmbPno2Ojo5J1xGPx/GXv/wFK1euhOM4eV82yoe9Ptd1MWvWLA7Kk3EMLEN839c6juR5HkpKSpDJZLTU19raiqamJgD5j3cFE05POukkbNmyJd+mEY2KzxIaoJSC67pa6xQRbWEFAAsXLsSll146ZMb8ZAW9tZdeegkrV67U1EKij2MPy5A///nPOPfcc7X1slzXRSwW01LXYPF4HKlUStsloud5WL58Od58801NLST6CHtYhmzYsCHsJuQknU5j5syZAJB3T0sphUgkgtdffx2JREJH84iGYGAZ8sILL2h9pMXkvK7u7m5UVVVpuTwMZvofOHCg6CbQUvgYWIZ0dXVZ9QxeV1cXli9fnp0cmo/gOcsNGzYwtEgrBpYhvb291vSwAm+88QbWrVunpS6lFD796U+jublZS31EAAfdjampqcH+/fu1zngvVG+lr68PiURCyyB8JpPheBZpwx6WIQMDA1onjhbSsmXLtCzmp5RCNBrFl770JQ2tImIPy5h4PI7+/n6tvaJC9bAcx8GhQ4dQVlambapDPB63akyPpib2sAzROckzoOvh5fH4vo9FixZp62UppbBw4UINLaPpjj0sg4K10nUQEcRiMXiep6W+8Sil4Hmell6diOCNN97AsmXLNLSMpjP2sAzRffk2eOebQhAR3HzzzVqOqZTCscceW7AeIhUv9rAMCZ4n1PkhDXbHKZRYLIbe3l4tjwR5nocFCxZg9+7dGlpG0xX/yaNReZ6HaDSqJSQdx8HatWs1tIqmMwaWIcUww9v3fTz44INa6lJKYdWqVbwspLzwktAQx3GQyWS0fkDDCMHm5mZs3bpVy5w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";
+        
+        // --- PASTE YOUR NEW *JPG* BASE64 STRING HERE ---
+        // It must start with "data:image/jpeg;base64,..."
+        const base64LogoData = "PASTE_YOUR_NEW_JPG_STRING_HERE";
 
 
         // Helper function to format Base64 for vCard
         function formatBase64ForVCard(base64) {
-            // Check if the data is valid and not the placeholder
-            if (!base64 || base64.startsWith("PASTE_YOUR")) {
-                console.error("Base64 data is missing. Please paste it into the script.");
-                return '';
-            }
-           
-            // First, strip the prefix (e.g., "data:image/png;base64,")
+            if (!base64 || base64 === "PASTE_YOUR_NEW_JPG_STRING_HERE") return '';
+            
+            // First, strip the prefix (e.g., "data:image/jpeg;base64,")
             const dataOnly = base64.split(',')[1];
-            if (!dataOnly) {
-                 console.error("Base64 string format is incorrect. Prefix (e.g., data:image/png;base64,) not found.");
-                 return ''; // In case prefix was missing
-            }
-           
+            if (!dataOnly) return ''; // In case prefix was missing
+            
             // vCard standard requires line breaks and a space for long lines.
             const lines = dataOnly.match(/.{1,75}/g);
             return lines.join('\r\n ');
         }
 
-
         // Main click event
         vcfButton.addEventListener('click', function(e) {
-            e.preventDefault();
-           
+            e.preventDefault(); 
+            
             const formattedPhoto = formatBase64ForVCard(base64LogoData);
-
 
             let vcfContent = `BEGIN:VCARD
 VERSION:3.0
@@ -243,13 +221,11 @@ ORG:Raghav & Associates
 TITLE:Legal & Business Consultant
 `;
 
-
             // Add photo only if it was successfully formatted
             if (formattedPhoto) {
-                // The Base64 you provided is a PNG
-                vcfContent += `PHOTO;ENCODING=b64;TYPE=PNG:${formattedPhoto}\r\n`;
+                // --- THIS IS NOW SET TO JPEG ---
+                vcfContent += `PHOTO;ENCODING=b64;TYPE=JPEG:${formattedPhoto}\r\n`;
             }
-
 
             vcfContent += `TEL;TYPE=CELL,VOICE:+919208759001
 TEL;TYPE=WORK,VOICE:+919451971817
@@ -257,9 +233,8 @@ EMAIL;TYPE=PREF:ask@raghavassociates.xyz
 URL:https://www.raghavassociates.xyz
 END:VCARD`;
 
-
             const vcfData = "data:text/vcard;charset=utf-8," + encodeURIComponent(vcfContent);
-           
+            
             const link = document.createElement("a");
             link.setAttribute("href", vcfData);
             link.setAttribute("download", "raghav-associates.vcf");
@@ -268,10 +243,10 @@ END:VCARD`;
             document.body.removeChild(link);
         });
 
-
         document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
 
-
 </body>
 </html>
+
+
