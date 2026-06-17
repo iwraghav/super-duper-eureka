@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="theme-color" content="#2563EB">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MEDx POS">
+  <link rel="manifest" href="manifest.json">
+  <title>MEDx POS - Pharmacy Billing System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['Courier New', 'monospace'] } } }
+    }
+  </script>
+  <style>
+    body { -webkit-tap-highlight-color: transparent; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.2s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    @media print {
+      @page { margin: 0; }
+      body { margin: 0; padding: 0; background: #fff; }
+      body * { visibility: hidden; }
+      .no-print { display: none !important; }
+      #printContainer, #printContainer * { visibility: visible; }
+      
+      #printContainer {
+        position: absolute; left: 0; top: 0; background: #fff; color: #000;
+      }
+      
+      /* Thermal Print Styles */
+      #printContainer.format-thermal {
+        width: 80mm; padding: 5mm; font-family: 'Courier New', monospace; font-size: 12px;
+      }
+      #printContainer.format-thermal table { width: 100%; border-collapse: collapse; }
+      
+      /* Regular A4 Print Styles */
+      #printContainer.format-regular {
+        width: 210mm; padding: 15mm; font-family: Arial, sans-serif; font-size: 14px;
+      }
+      #printContainer.format-regular table { width: 100%; border-collapse: collapse; }
+    }
+    
+    .install-banner { transition: all 0.3s ease; }
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .inventory-table th, .inventory-table td {
+      padding: 0.75rem 1rem;
+    }
+    .inventory-table .name-col { min-width: 180px; }
+    .inventory-table .batch-col { min-width: 140px; }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 antialiased transition-colors duration-200 pb-20 md:pb-0 md:pl-64">
+
+  <nav class="fixed bottom-0 w-full md:w-64 md:h-screen bg-white dark:bg-gray-800 border-t md:border-t-0 md:border-r border-gray-200 dark:border-gray-700 z-40 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] md:shadow-none flex md:flex-col justify-around md:justify-start md:pt-4 no-scrollbar overflow-x-auto">
+    <div class="hidden md:flex items-center px-6 mb-8 mt-4 gap-3 text-blue-600 dark:text-blue-400">
+      <i class="fas fa-prescription-bottle-medical text-2xl"></i>
+      <h1 class="text-2xl font-bold tracking-tight">MEDx POS</h1>
+    </div>
+    <div class="flex md:flex-col w-full px-2 gap-1 md:gap-2">
+      <button data-tab="billing" class="tab-btn active flex-1 md:flex-none flex flex-col md:flex-row items-center md:px-4 py-3 md:py-3 rounded-lg text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 text-xs md:text-sm font-medium transition-colors">
+        <i class="fas fa-calculator md:w-6 md:mr-2 text-lg md:text-base mb-1 md:mb-0"></i><span>Billing</span>
+      </button>
+      <button data-tab="inventory" class="tab-btn flex-1 md:flex-none flex flex-col md:flex-row items-center md:px-4 py-3 md:py-3 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 text-xs md:text-sm font-medium transition-colors">
+        <i class="fas fa-boxes-stacked md:w-6 md:mr-2 text-lg md:text-base mb-1 md:mb-0"></i><span>Inventory</span>
+      </button>
+      <button data-tab="restock" class="tab-btn flex-1 md:flex-none flex flex-col md:flex-row items-center md:px-4 py-3 md:py-3 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 text-xs md:text-sm font-medium transition-colors">
+        <i class="fas fa-truck-loading md:w-6 md:mr-2 text-lg md:text-base mb-1 md:mb-0"></i><span>Restock</span>
+      </button>
+      <button data-tab="pnl" class="tab-btn flex-1 md:flex-none flex flex-col md:flex-row items-center md:px-4 py-3 md:py-3 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 text-xs md:text-sm font-medium transition-colors">
+        <i class="fas fa-chart-line md:w-6 md:mr-2 text-lg md:text-base mb-1 md:mb-0"></i><span>P&L</span>
+      </button>
+      <button data-tab="data" class="tab-btn flex-1 md:flex-none flex flex-col md:flex-row items-center md:px-4 py-3 md:py-3 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 text-xs md:text-sm font-medium transition-colors">
+        <i class="fas fa-database md:w-6 md:mr-2 text-lg md:text-base mb-1 md:mb-0"></i><span>Data</span>
+      </button>
+      <button data-tab="settings" class="tab-btn flex-1 md:flex-none flex flex-col md:flex-row items-center md:px-4 py-3 md:py-3 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 text-xs md:text-sm font-medium transition-colors">
+        <i class="fas fa-cog md:w-6 md:mr-2 text-lg md:text-base mb-1 md:mb-0"></i><span>Settings</span>
+      </button>
+    </div>
+  </nav>
+
+  <header class="md:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex justify-between items-center sticky top-0 z-30">
+    <div class="flex items-center gap-2 text-blue-600 dark:text-blue-400">
+      <i class="fas fa-prescription-bottle-medical text-xl"></i>
+      <h1 class="text-xl font-bold tracking-tight">MEDx POS</h1>
+    </div>
+    <button id="themeToggleBtnMobile" class="text-gray-500 dark:text-gray-400 focus:outline-none p-2"><i class="fas fa-moon text-lg"></i></button>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-4 md:p-8">
+    <div class="hidden md:flex justify-between items-center mb-6">
+      <h2 id="pageTitle" class="text-2xl font-bold text-gray-800 dark:text-white">Billing Dashboard</h2>
+      <div class="flex items-center gap-4">
+        <div class="text-xs font-medium bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 px-3 py-1.5 rounded-full"><i class="fas fa-cubes mr-1"></i> <span id="headerItemsCount">0</span> Items</div>
+        <button id="themeToggleBtn" class="text-gray-500 dark:text-gray-400 focus:outline-none bg-white dark:bg-gray-800 p-2.5 rounded-full shadow-sm border border-gray-200 dark:border-gray-700"><i class="fas fa-moon"></i></button>
+      </div>
+    </div>
+
+    <div id="installBanner" class="install-banner hidden fixed bottom-20 md:bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 bg-blue-600 text-white p-3 rounded-xl shadow-xl z-50 flex items-center justify-between gap-3 backdrop-blur-sm bg-opacity-95">
+      <div class="flex items-center gap-2"><i class="fas fa-download"></i><span class="text-sm font-medium">Install MEDx POS App</span></div>
+      <div class="flex gap-2"><button id="installAppBtn" class="bg-white text-blue-600 px-3 py-1 rounded-lg text-xs font-bold">Install</button><button id="closeInstallBanner" class="text-white/80 text-xs px-2">✕</button></div>
+    </div>
+
+    <div id="billingPane" class="tab-content active">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 space-y-4">
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 shadow-sm border border-gray-200 dark:border-gray-700">
+            <h3 class="text-sm font-semibold mb-3 flex items-center gap-2 uppercase tracking-wide text-gray-500 dark:text-gray-400"><i class="fas fa-user-tag"></i> Buyer Details</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input type="text" id="custName" placeholder="Customer / Business Name" class="w-full text-sm p-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+              <input type="text" id="custMobile" placeholder="Mobile Number" class="w-full text-sm p-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+              <input type="text" id="custGst" placeholder="GSTIN (Optional)" class="w-full text-sm p-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none uppercase">
+              <input type="text" id="custDl" placeholder="Drug License (Optional)" class="w-full text-sm p-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none uppercase">
+            </div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 shadow-sm border border-gray-200 dark:border-gray-700 relative z-20">
+            <h3 class="text-sm font-semibold mb-3 flex items-center gap-2 uppercase tracking-wide text-gray-500 dark:text-gray-400"><i class="fas fa-pills"></i> Add to Invoice</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
+              <div class="sm:col-span-6 relative">
+                <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Search Medicine</label>
+                <input type="text" id="productSearch" placeholder="Type to search..." class="w-full text-sm p-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none" autocomplete="off">
+                <div id="productDropdown" class="absolute w-full mt-1 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg max-h-48 overflow-y-auto hidden z-30"></div>
+                <input type="hidden" id="selectedProductId">
+              </div>
+              <div class="sm:col-span-2"><label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Qty</label><input type="number" id="saleQty" value="1" min="1" class="w-full text-sm p-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white outline-none"></div>
+              <div class="sm:col-span-2"><label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Price (₹)</label><input type="number" id="salePrice" step="0.01" class="w-full text-sm p-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white outline-none"></div>
+              <div class="sm:col-span-2"><button id="addToCartBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-2.5 rounded-lg text-sm font-semibold transition-colors h-[42px]"><i class="fas fa-plus"></i> Add</button></div>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 shadow-sm border border-gray-200 dark:border-gray-700">
+            <h3 class="text-sm font-semibold mb-3 flex items-center gap-2 uppercase tracking-wide text-gray-500 dark:text-gray-400"><i class="fas fa-shopping-cart"></i> Cart Items</h3>
+            <div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead class="text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700/50 uppercase border-b dark:border-gray-700"><tr><th class="px-3 py-2">Item</th><th class="px-3 py-2">Qty</th><th class="px-3 py-2 text-right">Price</th><th class="px-3 py-2 text-right">Total</th><th class="px-3 py-2 text-center"></th></tr></thead><tbody id="cartTableBody"></tbody></table></div>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 shadow-sm border border-gray-200 dark:border-gray-700">
+            <h3 class="text-sm font-semibold mb-4 flex items-center gap-2 uppercase tracking-wide text-gray-500 dark:text-gray-400"><i class="fas fa-receipt"></i> Summary</h3>
+            <div class="space-y-2 text-sm"><div class="flex justify-between"><span>Subtotal</span><span id="summSubtotal" class="font-medium">₹0.00</span></div><div class="flex justify-between items-center py-2 border-y"><span>Discount (%)</span><input type="number" id="discountPercent" value="0" min="0" max="100" class="w-20 p-1 text-right border rounded bg-gray-50 dark:bg-gray-700 outline-none text-sm"></div><div class="flex justify-between items-center py-2"><label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="gstToggle" checked class="w-4 h-4 accent-blue-600"> Apply GST</label><div class="text-right text-xs"><div id="summCgst">CGST: ₹0.00</div><div id="summSgst">SGST: ₹0.00</div></div></div></div>
+            <div class="mt-4 pt-4 border-t flex justify-between items-end"><span class="uppercase font-semibold text-xs">Grand Total</span><span id="summTotal" class="text-3xl font-bold text-blue-600">₹0.00</span></div>
+            <button id="generateBillBtn" class="w-full mt-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-md transition-colors flex justify-center items-center gap-2 text-sm uppercase tracking-wide"><i class="fas fa-file-invoice"></i> Generate Invoice</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="inventoryPane" class="tab-content"><div class="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 shadow-sm border border-gray-200 dark:border-gray-700"><div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4"><input type="text" id="invSearch" placeholder="Search inventory..." class="w-full sm:w-64 text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"><div class="flex gap-4 text-sm"><div class="bg-blue-50 dark:bg-blue-900/30 px-3 py-1.5 rounded-lg">Value: <span id="invTotalValue">₹0.00</span></div><div class="bg-red-50 dark:bg-red-900/30 px-3 py-1.5 rounded-lg">Low: <span id="invLowStock">0</span></div></div></div><div class="overflow-x-auto rounded-lg border"><table class="w-full text-sm text-left"><thead class="text-xs bg-gray-50 dark:bg-gray-700 uppercase border-b"><tr><th class="px-4 py-3" style="min-width:180px">Medicine Name</th><th class="px-4 py-3" style="min-width:140px">Batch & Exp</th><th class="px-4 py-3 text-right">Cost</th><th class="px-4 py-3 text-right">Sell</th><th class="px-4 py-3 text-right">Stock</th><th class="px-4 py-3 text-right">Action</th></tr></thead><tbody id="inventoryTableBody"></tbody></table></div></div></div>
+
+    <div id="restockPane" class="tab-content"><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 shadow-sm border"><h3 class="text-sm font-semibold mb-4 uppercase tracking-wide"><i class="fas fa-boxes"></i> Update Existing Stock</h3><div class="space-y-3"><div><label class="block text-xs mb-1">Search Medicine</label><input type="text" id="rsSearch" placeholder="Type to select..." class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none" autocomplete="off"><div id="rsDropdown" class="absolute w-full mt-1 bg-white dark:bg-gray-700 border rounded-lg shadow-lg max-h-48 overflow-y-auto hidden z-20"></div><input type="hidden" id="rsId"></div><div class="grid grid-cols-3 gap-3"><div><label class="block text-xs">Add Qty</label><input type="number" id="rsQty" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div><label class="block text-xs">New Cost</label><input type="number" id="rsCost" step="0.01" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div><label class="block text-xs">New Sell</label><input type="number" id="rsSell" step="0.01" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div></div><button id="restockBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg"><i class="fas fa-check"></i> Update Stock</button></div></div><div class="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 shadow-sm border h-96 flex flex-col"><h3 class="text-sm font-semibold mb-4 uppercase"><i class="fas fa-history"></i> Restock Log</h3><div class="overflow-y-auto flex-1 border rounded-lg"><table class="w-full text-sm"><thead class="text-[10px] bg-gray-50 dark:bg-gray-700 uppercase sticky top-0"><tr><th class="px-3 py-2">Date</th><th class="px-3 py-2">Item</th><th class="px-3 py-2 text-right">Added</th></tr></thead><tbody id="restockLogBody"></tbody></table></div></div></div></div>
+
+    <div id="pnlPane" class="tab-content"><div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6"><div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border"><div class="text-xs uppercase mb-1">Total Revenue</div><div class="text-xl font-bold" id="pnlRev">₹0.00</div></div><div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border"><div class="text-xs uppercase mb-1">Total COGS</div><div class="text-xl font-bold text-red-500" id="pnlCost">₹0.00</div></div><div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border"><div class="text-xs uppercase mb-1">Net Profit</div><div class="text-xl font-bold text-emerald-500" id="pnlProfit">₹0.00</div></div><div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border"><div class="text-xs uppercase mb-1">Invoices</div><div class="text-xl font-bold text-blue-500" id="pnlCount">0</div></div></div><div class="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 shadow-sm border"><h3 class="text-sm font-semibold mb-4 uppercase"><i class="fas fa-file-invoice-dollar"></i> Saved Invoices</h3><div class="overflow-x-auto border rounded-lg max-h-96"><table class="w-full text-sm"><thead class="text-xs bg-gray-50 dark:bg-gray-700 uppercase sticky top-0"><tr><th class="px-4 py-3">INV #</th><th class="px-4 py-3">Date</th><th class="px-4 py-3">Customer</th><th class="px-4 py-3 text-right">Revenue</th><th class="px-4 py-3 text-right">Profit</th><th class="px-4 py-3 text-center">Action</th></tr></thead><tbody id="invoiceLogBody"></tbody></table></div></div></div>
+
+    <div id="dataPane" class="tab-content"><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 shadow-sm border"><h3 class="text-sm font-semibold mb-4 uppercase"><i class="fas fa-plus"></i> Manual Item Entry</h3><div class="grid grid-cols-2 gap-3"><div class="col-span-2"><input type="text" id="manName" placeholder="Medicine Name *" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div><input type="number" id="manCost" placeholder="Cost Price (₹) *" step="0.01" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div><input type="number" id="manSell" placeholder="Selling Price (₹) *" step="0.01" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div><input type="number" id="manQty" placeholder="Quantity *" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div><input type="text" id="manBatch" placeholder="Batch" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div class="col-span-2"><input type="month" id="manExp" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><button id="addManualBtn" class="col-span-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg mt-2">Save to Inventory</button></div></div><div class="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 shadow-sm border"><h3 class="text-sm font-semibold mb-4 uppercase"><i class="fas fa-file-csv"></i> Bulk Operations</h3><div class="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-xs font-mono mb-4">Format: Name, CostPrice, SellPrice, Qty, Batch, Exp(YYYY-MM)</div><button id="downloadTplBtn" class="w-full mb-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white text-sm py-2 rounded-lg font-medium"><i class="fas fa-download mr-1"></i> Download Template</button><label class="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:bg-gray-50 mb-4"><i class="fas fa-cloud-upload-alt text-2xl text-blue-500 mb-2"></i><span class="text-sm">Upload CSV</span><input type="file" id="csvFile" accept=".csv, text/csv, application/csv, application/vnd.ms-excel" class="hidden"></label><button id="loadDemoBtn" class="w-full text-xs text-gray-500 underline py-2">Load Demo Data</button></div></div></div>
+
+    <div id="settingsPane" class="tab-content"><div class="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-6 shadow-sm border max-w-2xl mx-auto"><h3 class="text-sm font-semibold mb-5 uppercase border-b pb-2"><i class="fas fa-store"></i> Business Profile</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div class="sm:col-span-2"><label class="block text-xs mb-1">Shop Name</label><input type="text" id="setShopName" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div class="sm:col-span-2"><label class="block text-xs mb-1">Address</label><input type="text" id="setAddress" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div><label class="block text-xs mb-1">Phone</label><input type="text" id="setPhone" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div><label class="block text-xs mb-1">Email</label><input type="email" id="setEmail" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div><label class="block text-xs mb-1">GSTIN</label><input type="text" id="setGst" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none uppercase"></div><div><label class="block text-xs mb-1">PAN</label><input type="text" id="setPan" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none uppercase"></div><div><label class="block text-xs mb-1">Drug License (DL 1)</label><input type="text" id="setDl1" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div><label class="block text-xs mb-1">Drug License (DL 2)</label><input type="text" id="setDl2" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div><label class="block text-xs mb-1">CGST (%)</label><input type="number" id="setCgst" step="0.1" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div><div><label class="block text-xs mb-1">SGST (%)</label><input type="number" id="setSgst" step="0.1" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none"></div>
+        <div class="sm:col-span-2 border-t pt-4 mt-2">
+          <label class="block text-xs font-semibold uppercase mb-2">Print Configuration</label>
+        </div>
+        <div>
+          <label class="block text-xs mb-1">Print Format</label>
+          <select id="setPrintFormat" class="w-full text-sm p-2.5 border rounded-lg bg-gray-50 dark:bg-gray-700 outline-none">
+            <option value="thermal">Thermal (80mm)</option>
+            <option value="regular">Regular (A4)</option>
+          </select>
+        </div>
+        <div class="flex items-center pt-5">
+          <label class="flex items-center gap-2 text-sm cursor-pointer select-none">
+            <input type="checkbox" id="setPreviewBill" class="w-4 h-4 accent-blue-600">
+            Show Bill Preview before printing
+          </label>
+        </div>
+      </div><button id="saveSettingsBtn" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg uppercase tracking-wide">Save Configuration</button></div></div>
+  </main>
+
+  <div id="printContainer" class="hidden no-print"></div>
+  <div id="toastContainer" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <div id="csvPreviewModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+    <div class="modal-backdrop bg-black/50 flex items-center justify-center p-4">
+      <div class="bg-white dark:bg-gray-800 rounded-xl max-w-6xl w-full max-h-[90vh] flex flex-col shadow-2xl">
+        <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+          <h3 class="text-lg font-bold">Preview & Edit CSV Data</h3>
+          <button id="closeCsvModal" class="text-gray-500 hover:text-gray-700"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="flex-1 overflow-auto p-4">
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm border">
+              <thead class="bg-gray-100 dark:bg-gray-700 sticky top-0">
+                <tr><th class="p-2 border" style="min-width:180px">Name</th><th class="p-2 border" style="min-width:100px">Cost</th><th class="p-2 border" style="min-width:100px">Sell</th><th class="p-2 border" style="min-width:80px">Qty</th><th class="p-2 border" style="min-width:120px">Batch</th><th class="p-2 border" style="min-width:120px">Expiry</th><th class="p-2 border" style="min-width:80px">Action</th></tr>
+              </thead>
+              <tbody id="csvPreviewBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="p-4 border-t dark:border-gray-700 flex justify-end gap-3">
+          <button id="cancelCsvImport" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded-lg">Cancel</button>
+          <button id="confirmCsvImport" class="px-4 py-2 bg-green-600 text-white rounded-lg">Confirm Import</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="billPreviewModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+    <div class="modal-backdrop bg-black/50 flex items-center justify-center p-4">
+      <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl">
+        <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+          <h3 class="text-lg font-bold">Invoice Preview</h3>
+          <button id="closePreviewModal" class="text-gray-500 hover:text-gray-700"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="flex-1 overflow-auto p-4 bg-gray-100 dark:bg-gray-900 flex justify-center items-start">
+          <div id="previewBillContent" class="bg-white text-black shadow-sm" style="min-height: 200px;"></div>
+        </div>
+        <div class="p-4 border-t dark:border-gray-700 flex justify-end gap-3">
+          <button id="doneNoPrintBtn" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded-lg font-medium">Done (Don't Print)</button>
+          <button id="confirmPrintBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium"><i class="fas fa-print mr-2"></i>Print Bill</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // ---------- PWA Install ----------
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; document.getElementById('installBanner')?.classList.remove('hidden'); });
+      document.getElementById('installAppBtn')?.addEventListener('click', async () => { if(deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; } document.getElementById('installBanner')?.classList.add('hidden'); });
+      document.getElementById('closeInstallBanner')?.addEventListener('click', () => document.getElementById('installBanner')?.classList.add('hidden'));
+      
+      // ---------- Data & State ----------
+      let DB = {
+        settings: JSON.parse(localStorage.getItem('medx_settings')) || { shopName: "MEDx POS", address: "Local Market, Main Road, City - 123456", phone: "9876543210", email: "shop@medx.pos", gst: "22AAAAA0000A1Z5", pan: "AAAAA0000A", dl1: "DL-20B-123", dl2: "DL-21B-456", cgst: 2.5, sgst: 2.5, billCounter: 1, printFormat: "thermal", previewBill: true },
+        inventory: JSON.parse(localStorage.getItem('medx_inventory')) || [],
+        cart: [],
+        invoices: JSON.parse(localStorage.getItem('medx_invoices')) || [],
+        restockLog: JSON.parse(localStorage.getItem('medx_restock')) || []
+      };
+      
+      if(DB.settings.printFormat === undefined) DB.settings.printFormat = 'thermal';
+      if(DB.settings.previewBill === undefined) DB.settings.previewBill = true;
+
+      function saveDB(key) { localStorage.setItem(`medx_${key}`, JSON.stringify(DB[key])); }
+      function genId() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 6); }
+      function showToast(msg, type="success") { const t = document.createElement('div'); t.className = `px-4 py-2 rounded-lg shadow-lg text-white text-sm font-medium transition-all ${type==='error'?'bg-red-500':'bg-emerald-500'} bg-opacity-95`; t.innerText = msg; document.getElementById('toastContainer').appendChild(t); setTimeout(()=>t.remove(), 2500); }
+
+      function closeAllDropdowns() {
+        document.getElementById('productDropdown')?.classList.add('hidden');
+        document.getElementById('rsDropdown')?.classList.add('hidden');
+      }
+      document.addEventListener('click', (e) => {
+        if(!e.target.closest('#productSearch') && !e.target.closest('#productDropdown')) closeAllDropdowns();
+        if(!e.target.closest('#rsSearch') && !e.target.closest('#rsDropdown')) document.getElementById('rsDropdown')?.classList.add('hidden');
+      });
+
+      // Billing dropdown
+      const pSearch = document.getElementById('productSearch');
+      const pDropdown = document.getElementById('productDropdown');
+      const pSelId = document.getElementById('selectedProductId');
+      const pPrice = document.getElementById('salePrice');
+      if(pSearch) {
+        pSearch.addEventListener('input', (e) => {
+          const q = e.target.value.toLowerCase();
+          pDropdown.innerHTML = '';
+          if(!q) { pDropdown.classList.add('hidden'); return; }
+          const matches = DB.inventory.filter(i => i.name.toLowerCase().includes(q) || i.batch.toLowerCase().includes(q));
+          if(!matches.length) { pDropdown.classList.add('hidden'); return; }
+          matches.slice(0,10).forEach(m => {
+            const div = document.createElement('div');
+            div.className = "px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex justify-between items-center border-b last:border-0";
+            div.innerHTML = `<span>${m.name} <span class="text-xs text-gray-400">(${m.batch})</span></span><span class="font-bold text-blue-600">₹${m.sellPrice.toFixed(2)}</span><span class="text-xs">Stock:${m.quantity}</span>`;
+            div.onclick = (e) => { e.stopPropagation(); pSearch.value = m.name; pSelId.value = m.id; pPrice.value = m.sellPrice; pDropdown.classList.add('hidden'); };
+            pDropdown.appendChild(div);
+          });
+          pDropdown.classList.remove('hidden');
+        });
+      }
+
+      // Restock dropdown
+      const rsSearch = document.getElementById('rsSearch');
+      const rsDropdown = document.getElementById('rsDropdown');
+      const rsId = document.getElementById('rsId');
+      if(rsSearch) {
+        rsSearch.addEventListener('input', (e) => {
+          const q = e.target.value.toLowerCase();
+          rsDropdown.innerHTML = '';
+          if(!q) { rsDropdown.classList.add('hidden'); return; }
+          const matches = DB.inventory.filter(i => i.name.toLowerCase().includes(q) || i.batch.toLowerCase().includes(q));
+          if(!matches.length) return;
+          matches.slice(0,10).forEach(m => {
+            const div = document.createElement('div');
+            div.className = "px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer border-b last:border-0";
+            div.innerText = `${m.name} (${m.batch}) | Stock: ${m.quantity}`;
+            div.onclick = (e) => { e.stopPropagation(); rsSearch.value = m.name; rsId.value = m.id; document.getElementById('rsCost').value = m.costPrice; document.getElementById('rsSell').value = m.sellPrice; rsDropdown.classList.add('hidden'); };
+            rsDropdown.appendChild(div);
+          });
+          rsDropdown.classList.remove('hidden');
+        });
+      }
+
+      // Cart functions
+      function updateCartUI() {
+        let sub = 0, cogs = 0;
+        const tbody = document.getElementById('cartTableBody');
+        if(!tbody) return;
+        tbody.innerHTML = '';
+        DB.cart.forEach((c, i) => {
+          const rowTot = c.qty * c.sellPrice;
+          sub += rowTot; cogs += (c.qty * c.costPrice);
+          tbody.innerHTML += `<tr class="border-b dark:border-gray-700"><td class="px-3 py-2">${c.name}<br><span class="text-[10px] text-gray-500">${c.batch}</span><td class="px-3 py-2">${c.qty}<td class="px-3 py-2 text-right">₹${c.sellPrice.toFixed(2)}<td class="px-3 py-2 text-right font-semibold">₹${rowTot.toFixed(2)}<td class="px-3 py-2 text-center"><button onclick="window.remCartFromGlobal(${i})" class="text-red-500"><i class="fas fa-times"></i></button></tr>`;
+        });
+        const discPct = parseFloat(document.getElementById('discountPercent')?.value) || 0;
+        let taxable = sub - (sub * discPct / 100);
+        if(taxable < 0) taxable = 0;
+        let cgstAmt=0, sgstAmt=0, grand=taxable;
+        const gstEnabled = document.getElementById('gstToggle')?.checked;
+        if(gstEnabled) {
+          cgstAmt = taxable * (DB.settings.cgst / 100);
+          sgstAmt = taxable * (DB.settings.sgst / 100);
+          grand = taxable + cgstAmt + sgstAmt;
+        }
+        document.getElementById('summSubtotal').innerText = `₹${sub.toFixed(2)}`;
+        document.getElementById('summCgst').innerHTML = `CGST (${DB.settings.cgst}%): ₹${cgstAmt.toFixed(2)}`;
+        document.getElementById('summSgst').innerHTML = `SGST (${DB.settings.sgst}%): ₹${sgstAmt.toFixed(2)}`;
+        document.getElementById('summTotal').innerHTML = `₹${grand.toFixed(2)}`;
+        window.cartTotals = { sub, disc: sub*discPct/100, cgstAmt, sgstAmt, grand, cogs, profit: taxable - cogs };
+      }
+      window.remCartFromGlobal = function(idx) { DB.cart.splice(idx,1); updateCartUI(); };
+      document.getElementById('addToCartBtn')?.addEventListener('click', () => {
+        const id = pSelId.value; const qty = parseInt(document.getElementById('saleQty')?.value); const sp = parseFloat(pPrice.value);
+        if(!id || !qty || !sp) return showToast('Select medicine and enter details', 'error');
+        const item = DB.inventory.find(i => i.id === id);
+        if(!item) return showToast('Item not found', 'error');
+        if(item.quantity < qty) return showToast(`Only ${item.quantity} available`, 'error');
+        const existing = DB.cart.find(c => c.id === id);
+        if(existing) { 
+          if((existing.qty + qty) > item.quantity) return showToast(`Only ${item.quantity} available`, 'error');
+          existing.qty += qty; 
+          existing.sellPrice = sp; 
+        } else { 
+          DB.cart.push({ ...item, qty, sellPrice: sp }); 
+        }
+        pSearch.value = ''; pSelId.value = ''; pPrice.value = ''; document.getElementById('saleQty').value = 1;
+        updateCartUI();
+      });
+
+      // Restock update
+      document.getElementById('restockBtn')?.addEventListener('click', () => {
+        const id = rsId.value; const qty = parseInt(document.getElementById('rsQty')?.value); const cp = parseFloat(document.getElementById('rsCost')?.value); const sp = parseFloat(document.getElementById('rsSell')?.value);
+        if(!id || isNaN(qty) || isNaN(cp) || isNaN(sp)) return showToast("Fill all fields", "error");
+        const item = DB.inventory.find(i=>i.id===id);
+        if(item) {
+          item.quantity += qty; item.costPrice = cp; item.sellPrice = sp;
+          DB.restockLog.unshift({ date: new Date().toISOString(), name: item.name, added: qty });
+          if(DB.restockLog.length > 50) DB.restockLog.pop();
+          saveDB('inventory'); saveDB('restock');
+          rsSearch.value=''; rsId.value=''; document.getElementById('rsQty').value='';
+          showToast("Stock updated"); renderRestockLog(); renderInventory();
+        } else showToast("Item not found", "error");
+      });
+
+      // ---------- CSV IMPORT ----------
+      let pendingCsvItems = [];
+      function openCsvPreview(items) {
+        pendingCsvItems = items.map((item, idx) => ({ ...item, tempId: idx }));
+        renderCsvPreviewTable();
+        document.getElementById('csvPreviewModal')?.classList.remove('hidden');
+      }
+      function renderCsvPreviewTable() {
+        const tbody = document.getElementById('csvPreviewBody');
+        if(!tbody) return;
+        tbody.innerHTML = '';
+        pendingCsvItems.forEach((item, idx) => {
+          const row = tbody.insertRow();
+          row.insertCell(0).innerHTML = `<input type="text" value="${escapeHtml(item.name)}" class="w-full p-1 border rounded text-sm" data-field="name" data-idx="${idx}">`;
+          row.insertCell(1).innerHTML = `<input type="number" step="0.01" value="${item.costPrice}" class="w-full p-1 border rounded text-sm" data-field="costPrice" data-idx="${idx}">`;
+          row.insertCell(2).innerHTML = `<input type="number" step="0.01" value="${item.sellPrice}" class="w-full p-1 border rounded text-sm" data-field="sellPrice" data-idx="${idx}">`;
+          row.insertCell(3).innerHTML = `<input type="number" value="${item.quantity}" class="w-full p-1 border rounded text-sm" data-field="quantity" data-idx="${idx}">`;
+          row.insertCell(4).innerHTML = `<input type="text" value="${escapeHtml(item.batch)}" class="w-full p-1 border rounded text-sm" data-field="batch" data-idx="${idx}">`;
+          row.insertCell(5).innerHTML = `<input type="text" value="${escapeHtml(item.expiry)}" class="w-full p-1 border rounded text-sm" data-field="expiry" data-idx="${idx}">`;
+          row.insertCell(6).innerHTML = `<button class="text-red-500 text-sm remove-csv-row" data-idx="${idx}"><i class="fas fa-trash"></i></button>`;
+        });
+        document.querySelectorAll('#csvPreviewBody input').forEach(inp => {
+          inp.addEventListener('change', (e) => {
+            const idx = parseInt(inp.dataset.idx);
+            const field = inp.dataset.field;
+            if(pendingCsvItems[idx]) pendingCsvItems[idx][field] = inp.value;
+          });
+        });
+        document.querySelectorAll('.remove-csv-row').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const idx = parseInt(btn.dataset.idx);
+            pendingCsvItems.splice(idx, 1);
+            renderCsvPreviewTable();
+          });
+        });
+      }
+      function escapeHtml(str) { return String(str).replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+      
+      document.getElementById('csvFile')?.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const lines = ev.target.result.split('\n').filter(l=>l.trim());
+          const items = [];
+          for(let i=1; i<lines.length; i++) {
+            const parts = lines[i].split(',').map(s=>s.trim());
+            if(parts.length >= 4 && parts[0]) {
+              items.push({
+                name: parts[0],
+                costPrice: parseFloat(parts[1]) || 0,
+                sellPrice: parseFloat(parts[2]) || 0,
+                quantity: parseInt(parts[3]) || 0,
+                batch: parts[4] || 'CSV',
+                expiry: parts[5] || 'N/A'
+              });
+            }
+          }
+          if(items.length) openCsvPreview(items);
+          else showToast('No valid data found', 'error');
+        };
+        reader.readAsText(file);
+        e.target.value = '';
+      });
+      
+      document.getElementById('confirmCsvImport')?.addEventListener('click', () => {
+        let added = 0;
+        for(let item of pendingCsvItems) {
+          if(item.name && !isNaN(item.costPrice) && !isNaN(item.sellPrice) && !isNaN(item.quantity) && item.quantity >= 0) {
+            DB.inventory.push({ 
+              id: genId(), name: item.name.trim(), costPrice: Number(item.costPrice), sellPrice: Number(item.sellPrice), quantity: Number(item.quantity), batch: item.batch || 'CSV', expiry: item.expiry || 'N/A' 
+            });
+            added++;
+          }
+        }
+        if(added) { saveDB('inventory'); showToast(`${added} items imported successfully`); renderInventory(); } 
+        else showToast('No valid items to import', 'error');
+        document.getElementById('csvPreviewModal')?.classList.add('hidden');
+        pendingCsvItems = [];
+      });
+      
+      document.getElementById('closeCsvModal')?.addEventListener('click', () => { document.getElementById('csvPreviewModal')?.classList.add('hidden'); pendingCsvItems = []; });
+      document.getElementById('cancelCsvImport')?.addEventListener('click', () => { document.getElementById('csvPreviewModal')?.classList.add('hidden'); pendingCsvItems = []; });
+
+      function renderInventory() { 
+        let val=0, low=0; 
+        const tbody = document.getElementById('inventoryTableBody'); 
+        if(!tbody) return; 
+        tbody.innerHTML=''; 
+        const searchTerm = document.getElementById('invSearch')?.value.toLowerCase()||''; 
+        DB.inventory.forEach(item => { 
+          val += item.sellPrice * item.quantity; 
+          if(item.quantity < 5) low++; 
+          if(searchTerm && !item.name.toLowerCase().includes(searchTerm) && !item.batch.toLowerCase().includes(searchTerm)) return; 
+          tbody.innerHTML += `<tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="px-4 py-2 font-medium break-words">${escapeHtml(item.name)}<td class="px-4 py-2 text-xs"><span class="font-mono">${escapeHtml(item.batch)}</span><br><span class="text-gray-400">${escapeHtml(item.expiry)}</span><td class="px-4 py-2 text-right">₹${item.costPrice.toFixed(2)}<td class="px-4 py-2 text-right text-blue-600 font-medium">₹${item.sellPrice.toFixed(2)}<td class="px-4 py-2 text-right ${item.quantity<5?'text-red-500 font-bold':''}">${item.quantity}<td class="px-4 py-2 text-right"><button onclick="window.deleteInventoryItem('${item.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button></td>`; 
+        }); 
+        document.getElementById('invTotalValue').innerText = `₹${val.toFixed(2)}`; 
+        document.getElementById('invLowStock').innerText = low; 
+        document.getElementById('headerItemsCount').innerText = DB.inventory.length; 
+      }
+      window.deleteInventoryItem = (id) => { if(confirm("Delete item permanently?")){ DB.inventory = DB.inventory.filter(i=>i.id!==id); saveDB('inventory'); renderInventory(); }};
+      document.getElementById('invSearch')?.addEventListener('input', renderInventory);
+      
+      function renderRestockLog() { const tbody = document.getElementById('restockLogBody'); if(!tbody) return; tbody.innerHTML=''; DB.restockLog.slice(0,30).forEach(l => { tbody.innerHTML += `<tr><td class="px-3 py-2 text-gray-500">${new Date(l.date).toLocaleDateString('en-IN')}<td class="px-3 py-2">${escapeHtml(l.name)}<td class="px-3 py-2 text-right text-emerald-600">+${l.added}<tr>`; }); }
+      
+      // ---------- P&L / SAVED INVOICES RENDER ----------
+      function renderPnl() { 
+        let rev=0, cost=0, profit=0; 
+        const tbody = document.getElementById('invoiceLogBody'); 
+        if(tbody){ 
+          tbody.innerHTML=''; 
+          [...DB.invoices].reverse().forEach(inv => { 
+            rev += inv.totals.grand; cost += inv.totals.cogs; profit += inv.totals.profit; 
+            tbody.innerHTML += `
+              <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                <td class="px-4 py-2">#${inv.id.toString().padStart(4,'0')}</td>
+                <td class="px-4 py-2 text-xs">${new Date(inv.date).toLocaleDateString('en-IN')}</td>
+                <td class="px-4 py-2">${escapeHtml(inv.customer)}</td>
+                <td class="px-4 py-2 text-right">₹${inv.totals.grand.toFixed(2)}</td>
+                <td class="px-4 py-2 text-right ${inv.totals.profit>=0?'text-emerald-500':'text-red-500'}">₹${inv.totals.profit.toFixed(2)}</td>
+                <td class="px-4 py-2 text-center whitespace-nowrap">
+                  <button onclick="window.viewInvoice(${inv.id})" class="text-blue-600 hover:text-blue-800 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded text-xs font-medium transition-colors mr-1"><i class="fas fa-eye mr-1"></i> View</button>
+                  <button onclick="window.deleteInvoice(${inv.id})" class="text-red-600 hover:text-red-800 bg-red-50 dark:bg-red-900/30 px-2 py-1 rounded text-xs font-medium transition-colors"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
+                </td>
+              </tr>`; 
+          }); 
+        } 
+        document.getElementById('pnlRev').innerText = `₹${rev.toFixed(2)}`; 
+        document.getElementById('pnlCost').innerText = `₹${cost.toFixed(2)}`; 
+        document.getElementById('pnlProfit').innerText = `₹${profit.toFixed(2)}`; 
+        document.getElementById('pnlCount').innerText = DB.invoices.length; 
+      }
+      
+      // REMOVE AN ISSUED BILL PERMANENTLY
+      window.deleteInvoice = function(id) {
+        if(confirm("Are you sure you want to delete this invoice permanently? This will update your financial history dashboard but will not add sold quantities back into stock ledger.")) {
+          DB.invoices = DB.invoices.filter(i => i.id !== id);
+          saveDB('invoices');
+          showToast("Invoice deleted successfully");
+          renderPnl();
+        }
+      };
+      
+      document.getElementById('addManualBtn')?.addEventListener('click', () => { const name = document.getElementById('manName')?.value.trim(); const cp = parseFloat(document.getElementById('manCost')?.value); const sp = parseFloat(document.getElementById('manSell')?.value); const qty = parseInt(document.getElementById('manQty')?.value); const batch = document.getElementById('manBatch')?.value.trim() || 'MANUAL'; const exp = document.getElementById('manExp')?.value || 'N/A'; if(!name || isNaN(cp) || isNaN(sp) || isNaN(qty)) return showToast("Required fields missing", "error"); DB.inventory.push({ id: genId(), name, costPrice: cp, sellPrice: sp, quantity: qty, batch, expiry: exp }); saveDB('inventory'); showToast(`${name} added`); renderInventory(); ['manName','manCost','manSell','manQty','manBatch','manExp'].forEach(id => document.getElementById(id).value = ''); });
+      document.getElementById('downloadTplBtn')?.addEventListener('click', () => { const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob(["Name,CostPrice,SellPrice,Qty,Batch,ExpiryYYYY-MM\nParacetamol 500mg,15.50,25.00,100,BCH123,2025-10"], {type:"text/csv"})); link.download = "medx_template.csv"; link.click(); });
+      document.getElementById('loadDemoBtn')?.addEventListener('click', () => { DB.inventory.push({id:genId(), name:'Dolo 650', costPrice:18, sellPrice:30, quantity:250, batch:'DL65', expiry:'2026-05'},{id:genId(), name:'Amoxycillin 250mg', costPrice:65, sellPrice:95, quantity:80, batch:'AMX25', expiry:'2025-11'},{id:genId(), name:'Cetirizine 10mg', costPrice:12.5, sellPrice:22, quantity:300, batch:'CTZ10', expiry:'2026-01'}); saveDB('inventory'); showToast("Demo loaded"); renderInventory(); });
+      
+      function loadSettingsIntoForm() { 
+        ['ShopName','Address','Phone','Email','Gst','Pan','Dl1','Dl2','Cgst','Sgst'].forEach(k => { const el = document.getElementById(`set${k}`); if(el) el.value = DB.settings[k.charAt(0).toLowerCase() + k.slice(1)]; }); 
+        document.getElementById('setPrintFormat').value = DB.settings.printFormat;
+        document.getElementById('setPreviewBill').checked = DB.settings.previewBill;
+      }
+      
+      document.getElementById('saveSettingsBtn')?.addEventListener('click', () => { 
+        ['ShopName','Address','Phone','Email','Gst','Pan','Dl1','Dl2','Cgst','Sgst'].forEach(k => { let val = document.getElementById(`set${k}`).value; if(k==='Cgst'||k==='Sgst') val = parseFloat(val)||0; DB.settings[k.charAt(0).toLowerCase() + k.slice(1)] = val; }); 
+        DB.settings.printFormat = document.getElementById('setPrintFormat').value;
+        DB.settings.previewBill = document.getElementById('setPreviewBill').checked;
+        saveDB('settings'); 
+        showToast('Settings saved'); 
+        updateCartUI(); 
+      });
+      
+      function numToWords(n){ if(n===0) return "Zero Rupees Only"; const a=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen']; const b=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety']; const c=(num)=>{ if(num<20) return a[num]; return b[Math.floor(num/10)] + (num%10 ? " " + a[num%10] : ""); }; let res="", num=Math.floor(n); if(num>=10000000){ res+=c(Math.floor(num/10000000))+" Crore "; num%=10000000; } if(num>=100000){ res+=c(Math.floor(num/100000))+" Lakh "; num%=100000; } if(num>=1000){ res+=c(Math.floor(num/1000))+" Thousand "; num%=1000; } if(num>=100){ res+=c(Math.floor(num/100))+" Hundred "; num%=100; } if(num>0) res+=c(num); return res.trim() + " Rupees Only"; }
+      
+      // ---------- INVOICE GENERATION ENGINE ----------
+      window.generateInvoiceHTML = function(invData, s, dateStr, timeStr) {
+        let html = '';
+        let items = invData.items || [];
+        let totals = invData.totals || {sub:0, disc:0, cgstAmt:0, sgstAmt:0, grand:0};
+        let cName = invData.customer || 'Walk-in Customer';
+        let cMob = invData.customerMob || 'N/A';
+        let invNo = invData.id;
+
+        if(s.printFormat === 'regular') {
+          let trs = ''; 
+          if(items.length === 0) {
+            trs = `<tr><td colspan="4" style="text-align:center; padding:8px; font-style:italic;">Legacy Invoice (Item details missing)</td></tr>`;
+          } else {
+            items.forEach(c => { trs += `<tr><td style="padding:8px; border-bottom:1px solid #ddd;">${escapeHtml(c.name)}<br><span style="font-size:11px; color:#555;">${escapeHtml(c.batch)}</span></td><td style="text-align:center; padding:8px; border-bottom:1px solid #ddd;">${c.qty}</td><td style="text-align:right; padding:8px; border-bottom:1px solid #ddd;">₹${c.sellPrice.toFixed(2)}</td><td style="text-align:right; padding:8px; border-bottom:1px solid #ddd;">₹${(c.qty*c.sellPrice).toFixed(2)}</td></tr>`; });
+          }
+          
+          html = `
+            <div style="text-align:center; margin-bottom:20px; border-bottom:2px solid #000; padding-bottom:10px;">
+              <h1 style="margin:0; font-size:24px; color:#2563EB;">${escapeHtml(s.shopName)}</h1>
+              <p style="margin:4px 0; font-size:14px;">${escapeHtml(s.address)} | Ph: ${escapeHtml(s.phone)}</p>
+              <p style="margin:4px 0; font-size:12px; color:#555;">GST: ${escapeHtml(s.gst)} | PAN: ${escapeHtml(s.pan)} | DL: ${escapeHtml(s.dl1)} / ${escapeHtml(s.dl2)}</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:20px; font-size:14px;">
+              <div><b>Bill To:</b> ${escapeHtml(cName)}<br><b>Mob:</b> ${escapeHtml(cMob)}</div>
+              <div style="text-align:right;"><b>Invoice:</b> #${invNo.toString().padStart(4,'0')}<br><b>Date:</b> ${dateStr} ${timeStr}</div>
+            </div>
+            <table style="width:100%; border-collapse:collapse; margin-bottom:20px; font-size:14px;">
+              <thead><tr style="background:#f3f4f6;"><th style="text-align:left; padding:10px; border-bottom:2px solid #ccc;">Item</th><th style="text-align:center; padding:10px; border-bottom:2px solid #ccc;">Qty</th><th style="text-align:right; padding:10px; border-bottom:2px solid #ccc;">Rate</th><th style="text-align:right; padding:10px; border-bottom:2px solid #ccc;">Amount</th></tr></thead>
+              <tbody>${trs}</tbody>
+            </table>
+            <div style="display:flex; justify-content:flex-end; font-size:14px;">
+              <div style="width:300px;">
+                <div style="display:flex; justify-content:space-between; padding:4px 0;"><span>Subtotal:</span><span>₹${totals.sub.toFixed(2)}</span></div>
+                ${totals.disc ? `<div style="display:flex; justify-content:space-between; padding:4px 0;"><span>Discount:</span><span>-₹${totals.disc.toFixed(2)}</span></div>` : ''}
+                <div style="display:flex; justify-content:space-between; padding:4px 0;"><span>CGST (${s.cgst}%):</span><span>₹${totals.cgstAmt.toFixed(2)}</span></div>
+                <div style="display:flex; justify-content:space-between; padding:4px 0;"><span>SGST (${s.sgst}%):</span><span>₹${totals.sgstAmt.toFixed(2)}</span></div>
+                <div style="display:flex; justify-content:space-between; padding:10px 0; border-top:2px solid #000; font-weight:bold; font-size:18px; margin-top:10px;"><span>Grand Total:</span><span>₹${totals.grand.toFixed(2)}</span></div>
+              </div>
+            </div>
+            <div style="margin-top:20px; font-size:12px; border-top:1px solid #ccc; padding-top:10px;">
+              <b>Amount in words:</b> ${numToWords(totals.grand)}<br><br>
+              <div style="text-align:center; font-weight:bold;">Thank You! Visit Again.</div>
+            </div>
+          `;
+        } else {
+          let trs = ''; 
+          if(items.length === 0) {
+            trs = `<tr><td colspan="4" style="text-align:center; padding:2px 0;">Legacy Invoice</td></tr>`;
+          } else {
+            items.forEach(c => { trs += `<tr><td style="font-size:10px; padding:2px 0;">${escapeHtml(c.name)}<br><span style="font-size:8px">${escapeHtml(c.batch)}</span></td><td style="text-align:center; padding:2px 0;">${c.qty}</td><td style="text-align:right; padding:2px 0;">${c.sellPrice.toFixed(2)}</td><td style="text-align:right; padding:2px 0;">${(c.qty*c.sellPrice).toFixed(2)}</td></tr>`; }); 
+          }
+          
+          html = `<div style="text-align:center; border-bottom:1px dashed #000; padding-bottom:5px;"><h2 style="margin:0; font-size:16px;">${escapeHtml(s.shopName)}</h2><p style="margin:2px 0; font-size:10px;">${escapeHtml(s.address)}</p><p style="margin:2px 0; font-size:10px;">Ph: ${escapeHtml(s.phone)}</p><p style="margin:2px 0; font-size:9px;">GST: ${escapeHtml(s.gst)} | PAN: ${escapeHtml(s.pan)}</p><p style="margin:2px 0; font-size:9px;">DL: ${escapeHtml(s.dl1)} / ${escapeHtml(s.dl2)}</p></div><div style="font-size:10px; border-bottom:1px dashed #000; padding-bottom:5px; margin-top:5px;"><div><b>INV:</b> #${invNo.toString().padStart(4,'0')} | ${dateStr} ${timeStr}</div><div><b>Bill To:</b> ${escapeHtml(cName)}</div><div><b>Mob:</b> ${escapeHtml(cMob)}</div></div><table style="width:100%; margin-top:5px; border-bottom:1px dashed #000; padding-bottom:5px;"><thead><tr><th style="text-align:left; border-bottom:1px dashed #000;">Item</th><th style="text-align:center; border-bottom:1px dashed #000;">Q</th><th style="text-align:right; border-bottom:1px dashed #000;">Rate</th><th style="text-align:right; border-bottom:1px dashed #000;">Amt</th></tr></thead><tbody>${trs}</tbody></table><div style="font-size:10px; margin-top:5px;"><div style="display:flex; justify-content:space-between;"><span>Subtotal:</span><span>${totals.sub.toFixed(2)}</span></div>${totals.disc ? `<div style="display:flex; justify-content:space-between;"><span>Discount:</span><span>-${totals.disc.toFixed(2)}</span></div>` : ''}<div style="display:flex; justify-content:space-between;"><span>CGST (${s.cgst}%):</span><span>${totals.cgstAmt.toFixed(2)}</span></div><div style="display:flex; justify-content:space-between;"><span>SGST (${s.sgst}%):</span><span>${totals.sgstAmt.toFixed(2)}</span></div><div style="display:flex; justify-content:space-between; font-weight:bold; border-top:1px dashed #000; padding-top:5px; margin-top:5px;"><span>TOTAL:</span><span>₹${totals.grand.toFixed(2)}</span></div></div><div style="font-size:9px; text-align:center; margin-top:5px;">${numToWords(totals.grand)}</div><div style="font-size:9px; text-align:center; margin-top:5px; border-top:1px dashed #000; padding-top:5px;">Thank You! Visit Again.</div>`; 
+        }
+        return html;
+      };
+
+      // VIEW PREVIOUS INVOICE
+      window.viewInvoice = function(id) {
+        const inv = DB.invoices.find(i => i.id === id);
+        if(!inv) return showToast('Invoice not found', 'error');
+        
+        const s = DB.settings;
+        const dt = new Date(inv.date); 
+        const dateStr = dt.toLocaleDateString('en-IN'); 
+        const timeStr = dt.toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'});
+        
+        const html = window.generateInvoiceHTML(inv, s, dateStr, timeStr);
+        
+        const printContainer = document.getElementById('printContainer');
+        const previewContent = document.getElementById('previewBillContent');
+        
+        printContainer.className = s.printFormat === 'regular' ? 'format-regular' : 'format-thermal';
+        
+        if (s.printFormat === 'regular') {
+          previewContent.style.width = '100%';
+          previewContent.style.maxWidth = '210mm';
+          previewContent.style.padding = '20px';
+          previewContent.style.fontFamily = 'Arial, sans-serif';
+        } else {
+          previewContent.style.width = '80mm';
+          previewContent.style.padding = '15px';
+          previewContent.style.fontFamily = "'Courier New', monospace";
+        }
+
+        printContainer.innerHTML = html; 
+        previewContent.innerHTML = html;
+        
+        document.getElementById('billPreviewModal').classList.remove('hidden');
+      };
+
+      // NEW INVOICE CREATION
+      document.getElementById('generateBillBtn')?.addEventListener('click', () => { 
+        if(!DB.cart.length) return showToast('Cart empty', 'error'); 
+        
+        // Deduct inventory
+        DB.cart.forEach(c => { const inv = DB.inventory.find(i => i.id === c.id); if(inv) inv.quantity -= c.qty; }); 
+        saveDB('inventory'); 
+        
+        // Setup details
+        const invNo = DB.settings.billCounter++; 
+        saveDB('settings'); 
+        const dt = new Date(); 
+        const dateStr = dt.toLocaleDateString('en-IN'); 
+        const timeStr = dt.toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'}); 
+        const custName = document.getElementById('custName')?.value || 'Walk-in Customer'; 
+        const custMob = document.getElementById('custMobile')?.value || 'N/A'; 
+        
+        // Save Invoice Record WITH ITEMS
+        const savedItems = JSON.parse(JSON.stringify(DB.cart));
+        const newInvoice = { id: invNo, date: dt.toISOString(), customer: custName, customerMob: custMob, totals: window.cartTotals, items: savedItems };
+        DB.invoices.push(newInvoice); 
+        saveDB('invoices'); 
+        
+        // Build view
+        const s = DB.settings;
+        const html = window.generateInvoiceHTML(newInvoice, s, dateStr, timeStr);
+
+        const printContainer = document.getElementById('printContainer');
+        const previewContent = document.getElementById('previewBillContent');
+        
+        printContainer.className = s.printFormat === 'regular' ? 'format-regular' : 'format-thermal';
+        
+        if (s.printFormat === 'regular') {
+          previewContent.style.width = '100%';
+          previewContent.style.maxWidth = '210mm';
+          previewContent.style.padding = '20px';
+          previewContent.style.fontFamily = 'Arial, sans-serif';
+        } else {
+          previewContent.style.width = '80mm';
+          previewContent.style.padding = '15px';
+          previewContent.style.fontFamily = "'Courier New', monospace";
+        }
+
+        printContainer.innerHTML = html; 
+        previewContent.innerHTML = html;
+
+        // Reset Cart UI
+        DB.cart = []; updateCartUI(); 
+        document.getElementById('custName').value = ''; 
+        document.getElementById('custMobile').value = ''; 
+        
+        if(s.previewBill) {
+          document.getElementById('billPreviewModal').classList.remove('hidden');
+        } else {
+          window.print();
+        }
+      });
+      
+      // Print Modal Listeners
+      document.getElementById('confirmPrintBtn')?.addEventListener('click', () => {
+        window.print();
+        document.getElementById('billPreviewModal').classList.add('hidden');
+      });
+      document.getElementById('doneNoPrintBtn')?.addEventListener('click', () => {
+        document.getElementById('billPreviewModal').classList.add('hidden');
+        renderPnl(); 
+      });
+      document.getElementById('closePreviewModal')?.addEventListener('click', () => {
+        document.getElementById('billPreviewModal').classList.add('hidden');
+        renderPnl();
+      });
+
+      // ---------- TAB ROUTING & CONTROLS ----------
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const tabPanes = document.querySelectorAll('.tab-content');
+      
+      tabBtns.forEach(btn => { 
+        btn.addEventListener('click', () => { 
+          const target = btn.dataset.tab; 
+          
+          tabBtns.forEach(b => { 
+            b.classList.remove('active','bg-blue-50','dark:bg-blue-900/30','text-blue-600'); 
+            b.classList.add('text-gray-500'); 
+          }); 
+          
+          btn.classList.add('active','bg-blue-50','dark:bg-blue-900/30','text-blue-600'); 
+          btn.classList.remove('text-gray-500');
+          
+          tabPanes.forEach(p => p.classList.remove('active')); 
+          
+          let targetPaneId = `${target}Pane`;
+          const targetPane = document.getElementById(targetPaneId);
+          if(targetPane) {
+            targetPane.classList.add('active'); 
+          }
+          
+          if(target === 'inventory') renderInventory(); 
+          if(target === 'pnl') renderPnl(); 
+          if(target === 'restock') renderRestockLog(); 
+        }); 
+      });
+      
+      const toggleDark = () => document.documentElement.classList.toggle('dark');
+      document.getElementById('themeToggleBtn')?.addEventListener('click', toggleDark);
+      document.getElementById('themeToggleBtnMobile')?.addEventListener('click', toggleDark);
+      document.getElementById('discountPercent')?.addEventListener('input', updateCartUI);
+      document.getElementById('gstToggle')?.addEventListener('change', updateCartUI);
+      
+      loadSettingsIntoForm();
+      renderInventory();
+      renderRestockLog();
+      renderPnl();
+      updateCartUI();
+    })();
+  </script>
+</body>
+</html>
